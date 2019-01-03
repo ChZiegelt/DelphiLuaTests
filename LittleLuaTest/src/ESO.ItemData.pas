@@ -14,11 +14,12 @@ uses
 
   , IIFA.Constants
   , IIFA.Character
+  , ESO.Server
 
   ;
 
 type
-  TItemIdIndex = (idx0, idx1, idxItemId, idx3 {, ...});
+  TESOItemIdIndex = (idx0, idx1, idxItemId, idx3 {, ...});
 
   TESOItemLink = class
   strict private
@@ -53,7 +54,7 @@ type
 
     FItemLink: TESOItemLink;
 
-    //RServer: TESOServer;
+    RServer: TESOServer;
   private
 
     //procedure setItemLink(const Value: String);
@@ -74,31 +75,35 @@ type
     property Name: String read FName write FName;
     property ItemInstanceOrUniqueId: String read FItemInstanceOrUniqueId write FItemInstanceOrUniqueId;
 
+    property ItemLink: TESOItemLink read FItemLink write FItemLink;
+
     // Proxy Methoden - Zugriff auf FItemLink
     property ItemId: Integer read getItemID; // write FItemId;
     property ItemLinkStr: String read getItemLinkString write setItemLinkString;
 
-    property ItemLink: TESOItemLink read FItemLink write FItemLink;
 
-    //property Server: TESOServer read RServer write RServer;
+    property Server: TESOServer read RServer write RServer;
 
     constructor Create( );
     destructor Destroy( ); override;
   end;
 
 
-
+  //Search methods etc. for TESOItemData
   TESOItemDataHandler = class
-
-    // die Liste der Items - nur hier freigeben und createn
+  strict private
+    // Diese Liste der Items - !nur hier freigeben und createn!
     List: TList< TESOItemData >;
 
+   public
     // Dictionaries für jede relevante zu suchende Eigenschaft
     byName:  TDictionary< String, TESOItemData >;  // eventuell doppelt vorhanden ?
     byID:    TDictionary< Integer, TESOItemData >;
     byLink:  TDictionary< String, TESOItemData >;
 
     procedure AddItem( const AItem: TESOItemData );
+    procedure RemoveItem( const AItem: TESOItemData );
+    procedure Clear();
 
     function SearchByQuality( AQuality: Integer ): TList< TESOItemData >;
   end;
@@ -146,7 +151,8 @@ begin
      FItemLink.ItemLink := '';
 end;
 
-{ TEsoItemLink }
+
+{ TESOItemLink }
 
 constructor TEsoItemLink.Create(const AItemLink: String);
 begin
@@ -170,17 +176,43 @@ end;
 
 { TESOItemDataHandler }
 
-procedure TESOItemDataHandler.AddItem(const AItem: TESOItemData);
+
+procedure TESOItemDataHandler.Clear;
 begin
-  List.Add( AItem );
-  byName.TryAdd( AItem.Name, AItem );
-  //byID.TryAdd(.)
+  byName.Clear;
+  byId.Clear;
+  byLink.Clear;
+  List.Clear;
 end;
 
-function TESOItemDataHandler.SearchByQuality(
-  AQuality: Integer): TList<TESOItemData>;
+procedure TESOItemDataHandler.RemoveItem(const AItem: TESOItemData);
 begin
+  byName.Remove(AItem.Name);
+  byId.Remove(AItem.ItemId);
+  byLink.Remove(AItem.ItemLinkStr);
+  List.Remove(AItem);
+end;
 
+procedure TESOItemDataHandler.AddItem(const AItem: TESOItemData);
+begin
+  byName.TryAdd( AItem.Name, AItem );
+  byId.TryAdd(AItem.ItemId, AItem);
+  byLink.TryAdd(AItem.ItemLinkStr, AItem);
+  List.Add( AItem );
+end;
+
+
+function TESOItemDataHandler.SearchByQuality(AQuality: Integer): TList<TESOItemData>;
+var
+  lESOItemData: TESOItemData;
+  lResult: TList<TESOItemData>;
+begin
+  lResult := TList<TESOItemData>.Create;
+
+  for lESOItemData in List do
+    if lESOItemData.Quality = AQuality then
+      lResult.Add(lESOItemData);
+  result := lResult;
 end;
 
 end.

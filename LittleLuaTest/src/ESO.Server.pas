@@ -1,4 +1,4 @@
-unit IIFA.Server;
+unit ESO.Server;
 
 interface
 
@@ -12,13 +12,12 @@ uses
   , System.Generics.Collections
   , Lua
 
-  , IIFA.Constants
-  , IIFA.Account
+  , ESO.Constants
 
   ;
 
 type
-  TIifaServer = class
+  TESOServer = class
   strict private
     FName:           String;
     FIP:             String;
@@ -37,7 +36,7 @@ implementation
 
 { TIifaServer }
 
-constructor TIifaServer.Create(Name, IP, OnlineCheckURL: String);
+constructor TESOServer.Create(Name, IP, OnlineCheckURL: String);
 begin
   inherited Create;
 

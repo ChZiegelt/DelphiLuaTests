@@ -17,6 +17,11 @@ interface
   const
 
     //-----------------------------------------------------
+    //----- Constants used for the IIfA SavedVariables file -----
+    //-----------------------------------------------------
+    IIFA_SV_FILENAME        = 'IIfA.lua';
+
+    //-----------------------------------------------------
     //----- Constants used in the IIfA SavedVariables file -----
     //-----------------------------------------------------
     //[Used in both, "settings" and "data"]

@@ -18,7 +18,7 @@ type
 
   TCharacterID = string;
 
-  TIifaCharacter = class
+  TIIfACharacter = class
   strict private
     FName: String;
     FID: TCharacterID;

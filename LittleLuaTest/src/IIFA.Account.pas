@@ -19,7 +19,7 @@ uses
 
 type
   // Klasse für Accounts aus LUA Dateien
-  TIifaAccount = class( TList< TIifaCharacter >  )
+  TIIfAAccount = class( TList< TIifaCharacter >  )
   strict private
     FDisplayName: String;
   public
@@ -81,11 +81,6 @@ begin
       if pair.Key.AsString = LAST_CHAR_NAME then
       begin
         lCharacter.Name := pair.Value.AsString;
-      end
-      //Einstellung aus IIfA LAM settings: Gildenbankdaten sammeln?
-      else if pair.Key.AsString = COLLECT_GUILDBANK_DATA then
-      begin
-        lCharacter.CollectGuildBankData := pair.Value.AsBoolean;
       end;
     end;
 

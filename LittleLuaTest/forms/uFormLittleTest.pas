@@ -109,7 +109,6 @@ begin
   inherited;
   //Create InventoryInsightFromAshes file parser and specify the filename of the IIfA SavedVariables
   IifaHelper := TIIFAHelper.Create;
-  IifaHelper.FileName := 'IIfA.lua';
 
 end;
 
@@ -131,7 +130,7 @@ begin
 
   // Ausgeben
   memo.Lines.Clear;
-  for lAccount in IifaHelper.Settings do
+  for lAccount in IifaHelper.Accounts.Values do
   begin
     lStrings := lAccount.ToStrings();
     memo.Lines.AddStrings( lStrings );

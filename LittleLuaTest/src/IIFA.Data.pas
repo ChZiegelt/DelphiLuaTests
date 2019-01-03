@@ -13,12 +13,12 @@ uses
 
   , IIFA.Constants
   , IIFA.Account
-  , IIFA.Server
+  , ESO.Server
 
   ;
 
 type
-  TIifaData = class( TList<TIifaServer> )
+  TIifaData = class( TList<TESOServer> )
   strict private
     FTable: ILuaTable;
     procedure setTable(const Value: ILuaTable);
@@ -36,8 +36,8 @@ var
   pair, pairAccounts, pairAccountWide, pairData, pairServer, pairDB, pairItems: TLuaKeyValuePair;
   pairServerKeyStr: String;
   lTable: ILuaTable;
-  lServer: TIifaServer;
-  //lServerType: TIifaServerType;
+  lServer: TESOServer;
+  //lServerType: TESOServerType;
   lServerIndex: byte;
   lAccount: TIifaAccount;
   str: String;
@@ -120,9 +120,9 @@ begin
                         if lServerIndex > 0 then
                         begin
                           //Create a new server instance, and assign the current acount to it
-                          //lServerType := TIifaServerType.Create(IIFA_SERVER_DATA[lServerIndex][1], IIFA_SERVER_DATA[lServerIndex][2], IIFA_SERVER_DATA[lServerIndex][3]);
+                          //lServerType := TESOServerType.Create(IIFA_SERVER_DATA[lServerIndex][1], IIFA_SERVER_DATA[lServerIndex][2], IIFA_SERVER_DATA[lServerIndex][3]);
                           (*
-                          lServer     := TIifaServer.Create(lServerType);
+                          lServer     := TESOServer.Create(lServerType);
                           //Create the currently selected account new and assign it to the server, if it's not already in it
                           lAccount := TIifaAccount.Create( pairAccounts.Key.AsString.Replace('@', '') );
                           if not lServer.Contains(lAccount) then

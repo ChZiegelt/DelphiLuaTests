@@ -13,14 +13,12 @@ uses
   , Lua
 
   , ESO.Constants
-  , IIFA.Constants
-  , IIFA.Data
-  , IIFA.Settings
-
-  , IIFA.Character
-  , IIFA.Account
-  , IIFA.Server
+  , ESO.Server
   , ESO.ItemData
+
+  , IIFA.Constants
+  , IIFA.Account
+  , IIFA.Character
 
   ;
 
@@ -29,23 +27,23 @@ type
   strict private
     FLua: TLua;
 
-    FData: TIifaData;
-    FSettings: TIifaSettings;
     FFileName: String;
 
-    FAccounts:    TList<TIifaAccount>;
-    FCharacters:  TList<TIifaCharacter>;
-    FServers:     TDictionary<String, TIIFAServer>;
+    FAccounts:    TDictionary<String, TIifaAccount>;
+    FCharacters:  TDictionary<String, TIifaCharacter>;
+    FServers:     TDictionary<String, TESOServer>;
 
     FItems:       TESOItemDataHandler;//TLIst<TESOItemData>;
+  private
 
-
-    procedure ParseTable(const aTable: ILuaTable);
+    procedure ParseSettingsTable(const aSettingsTable: ILuaTable);
+    procedure ParseDataTable(const aDataTable: ILuaTable);
   public
-    property Data: TIifaData read FData write FData;
-    property Settings: TIifaSettings read FSettings write FSettings;
-
     property FileName: String read FFileName write FFileName;
+    property Servers: TDictionary<String, TESOServer> read FServers;
+    property Accounts: TDictionary<String, TIifaAccount> read FAccounts;
+    property Characters: TDictionary<String, TIifaCharacter> read FCharacters;
+    property Items: TESOItemDataHandler read FItems;
 
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
@@ -65,30 +63,34 @@ procedure TIIFAHelper.AfterConstruction;
 begin
   inherited;
   //Build some constant values
-  //Create the server type entries if they are not already created
-  //NA
+  //Create the server entries if they are not already created
+  //NA, EU, PTS
+  FServers := TDictionary<String, TESOServer>.Create(3);
+  FServers.Add(SERVER_NA, TESOServer.Create( SERVER_NA, SERVER_NA_IP, SERVER_ANNOUNCEMENTS_URL) );
+  FServers.Add(SERVER_EU, TESOServer.Create( SERVER_EU, SERVER_EU_IP, SERVER_ANNOUNCEMENTS_URL) );
+  FServers.Add(SERVER_PTS, TESOServer.Create( SERVER_PTS, SERVER_PTS_IP, SERVER_ANNOUNCEMENTS_URL) );
 
-  FServers := TDictionary<String, TIifaServer>.Create(3);
-  FServers.Add(SERVER_NA, TIifaServer.Create( SERVER_NA, SERVER_NA_IP, SERVER_ANNOUNCEMENTS_URL) );
-  FServers.Add(SERVER_EU, TIifaServer.Create( SERVER_EU, SERVER_EU_IP, SERVER_ANNOUNCEMENTS_URL) );
-  FServers.Add(SERVER_PTS, TIifaServer.Create( SERVER_PTS, SERVER_PTS_IP, SERVER_ANNOUNCEMENTS_URL) );
+  //Create the object lists/dictionaries
+  FAccounts   := TDictionary<String, TIIfAAccount>.Create();
+  FCharacters := TDictionary<String, TIIfACharacter>.Create();
+  FItems      := TESOItemDataHandler.Create();
+
+  //Specify the standard SavedVariables filename
+  FFileName := IIFA_SV_FILENAME;
 
   //Load the LUAWrapper library
   FLua := TLua.Create;
   //Load additional lua libraries like String handling, OS, etc.
   //FLua.AutoOpenLibraries := [Base, StringLib {, ...}];
-
-  //Create the instances of Settings
-  FSettings := TIifaSettings.Create;
-  //Create the instances of Data
-  FData     := TIifaData.Create();
 end;
 
 
 procedure TIIFAHelper.BeforeDestruction;
 begin
-  FreeAndNil( FData );
-  FreeAndNil( FSettings );
+  FreeAndNil( FAccounts );
+  FreeAndNil( FCharacters );
+  FreeAndNil( FServers );
+  FreeAndNil( FItems );
 
   FreeAndNil( FLua );
 
@@ -101,11 +103,13 @@ function TIIFAHelper.ParseFile(const AFileName: String = ''): Boolean;
 var
   lFile: String;
 
-  lTable: ILuaTable;
+  lDataTable, lSettingsTable: ILuaTable;
   enum: ILuaTableEnumerator;
   pair: TLuaKeyValuePair;
 
-  List: TStringList;
+  lAccountExtracted: TIIfAAccount;
+  lCharacterExtracted: TIifaCharacter;
+  lLuaCodeHelperList: TStringList;
   lAccountIdx, lCharacterIdx: Integer;
 
 begin
@@ -119,41 +123,55 @@ begin
   if not FileExists(lFile) then
      exit(False);
 
-  //Clear the old entries in Settings and Data tables
-  Settings.Clear;
-  Data.Clear;
+  //Clear the old entries in Accounts, characters, items here now
+  if Assigned(FAccounts) then
+    FAccounts.Clear;
+  if Assigned(FCharacters) then
+    FCharacters.Clear;
+  //FItems.Clear;
 
+  //Load the contents of the IIfA.lua SavedVariables file
   //LoadFromFile is not able to use UTF8 conversion properly!
   //FLua.LoadFromFile( lFile, True );
   //Workaround over TStringList to support UTF8 files w/o BOM
-  List := TStringList.Create;
-  List.LoadFromFile( lFile );
-  FLua.LoadFromString( System.UTF8ToString( List.Text ));
-  List.Free;
+  lLuaCodeHelperList := TStringList.Create;
+  lLuaCodeHelperList.LoadFromFile( lFile );
+  FLua.LoadFromString( System.UTF8ToString( lLuaCodeHelperList.Text ));
+  lLuaCodeHelperList.Free;
 
-  // Jetzt die Arrays aufdröseln und in Delphi Objekte speichern
-  //->Beim Verwenden von .Table := wird die in der Klasse IifaSettings gesetzte "write" Methode "setTable" aufgerufen!
-  Settings.Table := FLua.GetGlobalVariable('IIfA_Settings').AsTable;
+  //Get the global variable contents from lua routines: IIfA_Settings (SavedVariables object containing the account + character addon settings)
+  lSettingsTable := FLua.GetGlobalVariable('IIfA_Settings').AsTable;
+  ParseSettingsTable(lSettingsTable);
 
-  // Es existiert jetzt eine Liste von Accounts und Characters
+  // List of Accounts, containing the characters, exists now
   //IIFa_Settings->Accounts->Characters
-  // Verschiebe jetzt die Character und Accounts in die Liste des Helpers
-  for lAccountIdx := 0 to Settings.Count -1 do
-  begin
-    FAccounts.Add( Settings.ExtractAt( lAccountIdx ) );
+  //Move the accounts to TIIFAHelper.fAccounts and the characters to TIIfAHelper.fCharacters
+//  for lAccountIdx := 0 to Settings.Count -1 do
+//  begin
+//    //FAccounts.Add( Settings.ExtractAt( lAccountIdx ) );
+//    //Add the unique Account displayName as key and the account object as value
+//    lAccountExtracted := TIifaAccount.Create('');
+//    lAccountExtracted := Settings.ExtractAt( lAccountIdx );
+//    FAccounts.Add(lAccountExtracted.DisplayName, lAccountExtracted);
 
-    for lCharacterIdx := 0 to FAccounts[ lAccountIdx ].Count -1 do
-        FCharacters.Add( FAccounts[ lAccountIdx ].ExtractAt( lCharacterIdx ) );
-  end;
+//    //for lCharacterIdx := 0 to FAccounts[ lAccountIdx ].Count -1 do
+//    //    FCharacters.Add( FAccounts[ lAccountIdx ].ExtractAt( lCharacterIdx ) );
+//    for lCharacterIdx := 0 to lAccountExtracted.Count -1 do
+//    begin
+//        //Add the unique CharacterId as key and the character object as value
+//        lCharacterExtracted := lAccountExtracted.ExtractAt( lCharacterIdx );
+//        FCharacters.Add( lCharacterExtracted.ID, lCharacterExtracted );
+//    end;
 
- // FItems.byLink['2345'].
+//  end;
 
-  //IIFa_Data->Accounts->AccountWide->Server->DatenbankVersion->Item->Location->Characters/Bag
-  //DataTable     := FLua.GetGlobalVariable('IIfA_Data').AsTable;
+//
+  //Get the global variable contents from lua routines: IIfA_Data (SavedVariables object containing the item information at each bag + character, server and account on server)
+//  lDataTable := FLua.GetGlobalVariable('IIfA_Data').AsTable;
+//  // Diese Methode füllt dann Server[], Items[] etc. und ordnet diese Items dann den Characters und Accounts zu
+//  ParseDataTable( lDataTable );
 
-  // Diese Methode füllt dann Server[], Items[]
-  //ParseDataTable( DataTable );
-  // Durchsuchen von Servern und Pürfen ob vorhanden (nur Dictionary)
+  // Durchsuchen von Servern und Prüfen ob vorhanden (nur Dictionary)
 //  if FServers.ContainsKey('serverPair.Key.ToString') then
 //     lServer := FServers.Items['serverPair.Key.ToString'];
 
@@ -165,55 +183,166 @@ begin
 //   end;
 //  end;
 
-
+  //Search Items via helper class TESOItemDataHandler
+ // FItems.byLink['12345'].
 
   FFileName := lFile;
   Result := true;
 end;
 
 
-//Not needed yet
-procedure TIIFAHelper.ParseTable( const aTable: ILuaTable );
+procedure TIIFAHelper.ParseSettingsTable(const aSettingsTable: ILuaTable);
 var
-  enum: ILuaTableEnumerator;
+  enum, enumAccounts: ILuaTableEnumerator;
   pair: TLuaKeyValuePair;
+  pairAccounts: TLuaKeyValuePair;
+
+  lTable: ILuaTable;
+
+  lAccount: TIifaAccount;
 
 begin
-  enum := aTable.GetEnumerator;
+  // Wenn nicht nil, versuche den Inhalt zu verstehen
+  if not Assigned(aSettingsTable) then
+     exit;
 
+  // Parse die Arrays unterhalb von IIfA_Settings
+  enum := aSettingsTable.GetEnumerator;
+
+  //Get next entry of IIfA_Settings
   while enum.MoveNext do
   begin
     pair := enum.Current;
 
-    case pair.Value.VariableType of
-      VariableNone: begin
+    //Is entry "Default" of IIfA_Settings?
+    if pair.Key.AsString = BASE_SAVEDVARS_NAME then
+    begin
+      lTable := pair.Value.AsTable;
+      enumAccounts := lTable.GetEnumerator;
 
+      // Iteriere durch die Accounts
+      while enumAccounts.MoveNext do
+      begin
+        pairAccounts := enumAccounts.Current;
+        lAccount := TIifaAccount.Create( pairAccounts.Key.AsString.Replace('@', '') );
+        fAccounts.Add( lAccount.DisplayName, lAccount );
+
+        // Passend zum Account die Charaktere laden
+        lAccount.ParseCharacters( pairAccounts.Value.AsTable );
       end;
-
-      VariableBoolean: begin
-
-      end;
-
-      VariableInteger, VariableNumber: begin
-
-      end;
-
-      VariableString: begin
-
-      end;
-
-      VariableTable, VariableUserData: begin
-        ParseTable( Pair.Value.AsTable );
-
-      end;
-
-      VariableFunction: begin
-
-      end;
-
     end;
   end;
 end;
 
+//Called from TIIFAHelper.ParseFile after parsing the settings table,
+// the data table will be parsed now to get the items
+procedure TIIFAHelper.ParseDataTable( const aDataTable: ILuaTable );
+var
+  enum, enumAccounts, enumAccountWide, enumData, enumServer, enumDB, enumItems: ILuaTableEnumerator;
+  pair, pairAccounts, pairAccountWide, pairData, pairServer, pairDB, pairItems: TLuaKeyValuePair;
+  pairServerKeyStr: String;
+  lTable: ILuaTable;
+  lServer: TESOServer;
+  lServerIndex: byte;
+  lAccount: TIifaAccount;
+  str: String;
+
+begin
+  // Wenn nicht nil, versuche den Inhalt zu verstehen
+  if not Assigned(aDataTable) then
+     exit;
+
+  // Parse die Arrays unterhalb von IIfA_Data
+  enum := aDataTable.GetEnumerator;
+
+  //Get next entry of IIfA_Data
+  while enum.MoveNext do
+  begin
+    pair := enum.Current;
+
+    //Is entry "Default" of IIfA_Data?
+    if pair.Key.AsString = BASE_SAVEDVARS_NAME then
+    begin
+      lTable := pair.Value.AsTable;
+      enumAccounts := lTable.GetEnumerator;
+
+      // Iterate over the possible accounts
+      while enumAccounts.MoveNext do
+      begin
+        pairAccounts := enumAccounts.Current;
+
+        // Finde den passenden Account in der Liste
+
+        lTable := pairAccounts.Value.AsTable;
+        enumAccountWide := lTable.GetEnumerator;
+        while enumAccountWide.MoveNext do
+        begin
+          pairAccountWide := enumAccountWide.Current;
+
+          //Get next entry and check if it is '$AccountWide'
+          if pairAccountWide.Key.AsString = ACCOUNT_WIDE_CHAR then
+          begin
+            lTable := pairAccountWide.Value.AsTable;
+            enumData := lTable.GetEnumerator;
+
+            //Iterate over the possible AccountWide entries
+            while enumData.MoveNext do
+            begin
+              pairData := enumData.Current;
+
+              //Get next entry and check if it is 'Data'
+              if pairData.Key.AsString = ENTRY_DATA then
+              begin
+                lTable := pairData.Value.AsTable;
+                enumServer := lTable.GetEnumerator;
+
+                //Iterate over the possible server entries
+                while enumServer.MoveNext do
+                begin
+                  pairServer := enumServer.Current;
+                  pairServerKeyStr := pairServer.Key.AsString;
+
+                  //Get next entry and check if it is one of the server constants 'EU', 'NA', or 'PTS'
+                  if (pairServerKeyStr = SERVER_EU)
+                  or (pairServerKeyStr = SERVER_NA)
+                  or (pairServerKeyStr = SERVER_PTS) then
+                  begin
+                    lTable := pairServer.Value.AsTable;
+                    enumDB := lTable.GetEnumerator;
+
+                    while enumDB.MoveNext do
+                    begin
+                      pairDB := enumDB.Current;
+                    //Get next entry and check if it is the database version (currently DBv3, 2019-01-02)
+                      if pairDB.Key.AsString = IIFA_SV_DB_VERSION then
+                      begin
+                        lTable := pairDB.Value.AsTable;
+                        enumItems := lTable.GetEnumerator;
+
+                        while enumItems.MoveNext do
+                        begin
+                          pairItems := enumItems.Current;
+                          //lItem := TESOItem.Create( pairItems.Key.AsString );
+                          //fItems.Add( lItem );
+                          str := pairItems.Key.AsString;
+                        end;
+
+                      end;
+
+                    end;
+
+                  end;
+                end;
+
+              end;
+
+            end
+
+          end;
+        end
+      end;
+    end;
+  end;
+end;
 
 end.

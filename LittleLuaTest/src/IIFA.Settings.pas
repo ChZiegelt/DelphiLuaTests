@@ -19,7 +19,7 @@ uses
 
 type
 
-  TIifaSettings = class( TList<TIifaAccount> )
+  TIIfASettings = class( TList<TIifaAccount> )
   strict private
     FTable: ILuaTable;
     procedure setTable(const Value: ILuaTable);
