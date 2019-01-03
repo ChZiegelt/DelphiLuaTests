@@ -61,11 +61,12 @@ begin
  inherited Create;
 end;
 
-function GetItemIdFromItemLink(ItemLink: String)
+function GetItemIdFromItemLink(ItemLink: String): Integer;
 var itemId: Integer;
 begin
   result := itemId;
-end
+end;
+
 
 procedure TESOItemData.setItemLink(const Value: String);
 begin
@@ -73,7 +74,7 @@ begin
   //Check if the itemId is already set. If not: Read it from the itemLink and set it too
   if ( Value <> '') and (FItemId = 0) then
   begin
-    FItemId := self.GetItemIdFromItemLink(Value)
+//    FItemId := self.GetItemIdFromItemLink(Value)
   end;
 
 end;

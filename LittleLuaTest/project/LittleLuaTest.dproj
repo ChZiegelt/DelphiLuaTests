@@ -131,8 +131,6 @@
             <Form>Form1</Form>
             <FormType>fmx</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\..\Wrapper\delphilua\Lua.API.pas"/>
-        <DCCReference Include="..\..\..\Wrapper\delphilua\Lua.pas"/>
         <DCCReference Include="..\src\IIFA.Helper.pas"/>
         <DCCReference Include="..\src\IIFA.Settings.pas"/>
         <DCCReference Include="..\src\IIFA.Account.pas"/>
@@ -143,6 +141,8 @@
         <DCCReference Include="..\src\IIFA.Item.pas"/>
         <DCCReference Include="..\src\ESO.Constants.pas"/>
         <DCCReference Include="..\src\ESO.ItemData.pas"/>
+        <DCCReference Include="..\DelphiLua\Lua.API.pas"/>
+        <DCCReference Include="..\DelphiLua\Lua.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
