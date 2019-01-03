@@ -12,7 +12,10 @@ uses
   IIFA.Character in '..\src\IIFA.Character.pas',
   IIFA.Data in '..\src\IIFA.Data.pas',
   IIFA.Server in '..\src\IIFA.Server.pas',
-  IIFA.Constants in '..\src\IIFA.Constants.pas';
+  IIFA.Constants in '..\src\IIFA.Constants.pas',
+  IIFA.Item in '..\src\IIFA.Item.pas',
+  ESO.Constants in '..\src\ESO.Constants.pas',
+  ESO.ItemData in '..\src\ESO.ItemData.pas';
 
 {$R *.res}
 
