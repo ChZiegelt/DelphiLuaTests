@@ -4,13 +4,14 @@ IIfA_Settings =
     {
         ["@TestAcc"] = 
         {
-            ["8798292046222073"] = 
+            ["8798292046222099"] =
             {
+            	["$LastCharacterName"] = "TestChar",
 			},
 		},
 		["@Baertram"] = 
         {
-            ["8798292046222073"] = 
+            ["8798292046222073"] =
             {
                 ["showItemStats"] = false,
                 ["bCollectGuildBankData"] = false,

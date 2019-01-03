@@ -107,8 +107,8 @@ var
   enum: ILuaTableEnumerator;
   pair: TLuaKeyValuePair;
 
-  lAccountExtracted: TIIfAAccount;
-  lCharacterExtracted: TIifaCharacter;
+  lAccountExtractorPair: TPair<string, TIIfAAccount>;
+  lCharacterExtracted: TIIfACharacter;
   lLuaCodeHelperList: TStringList;
   lAccountIdx, lCharacterIdx: Integer;
 
@@ -128,7 +128,10 @@ begin
     FAccounts.Clear;
   if Assigned(FCharacters) then
     FCharacters.Clear;
-  //FItems.Clear;
+  //TODO:
+  //->Error message: Pointer error!
+  //if Assigned(FItems) then
+    //FItems.Clear;
 
   //Load the contents of the IIfA.lua SavedVariables file
   //LoadFromFile is not able to use UTF8 conversion properly!
@@ -143,19 +146,17 @@ begin
   lSettingsTable := FLua.GetGlobalVariable('IIfA_Settings').AsTable;
   ParseSettingsTable(lSettingsTable);
 
-  // List of Accounts, containing the characters, exists now
-  //IIFa_Settings->Accounts->Characters
-  //Move the accounts to TIIFAHelper.fAccounts and the characters to TIIfAHelper.fCharacters
-//  for lAccountIdx := 0 to Settings.Count -1 do
-//  begin
-//    //FAccounts.Add( Settings.ExtractAt( lAccountIdx ) );
-//    //Add the unique Account displayName as key and the account object as value
-//    lAccountExtracted := TIifaAccount.Create('');
-//    lAccountExtracted := Settings.ExtractAt( lAccountIdx );
-//    FAccounts.Add(lAccountExtracted.DisplayName, lAccountExtracted);
+  // List of Accounts, containing the characters, exists now within fAccounts
+  // IIFa_Settings->Accounts->Characters
+  // Move the accounts to TIIFAHelper.fAccounts and the characters to TIIfAHelper.fCharacters
+    for lAccountExtractorPair in FAccounts do
+    begin
+      for lCharacterExtracted in lAccountExtractorPair.Value do
+      begin
+        FCharacters.Add(lCharacterExtracted.ID , lCharacterExtracted);
+      end;
+    end;
 
-//    //for lCharacterIdx := 0 to FAccounts[ lAccountIdx ].Count -1 do
-//    //    FCharacters.Add( FAccounts[ lAccountIdx ].ExtractAt( lCharacterIdx ) );
 //    for lCharacterIdx := 0 to lAccountExtracted.Count -1 do
 //    begin
 //        //Add the unique CharacterId as key and the character object as value
@@ -163,9 +164,6 @@ begin
 //        FCharacters.Add( lCharacterExtracted.ID, lCharacterExtracted );
 //    end;
 
-//  end;
-
-//
   //Get the global variable contents from lua routines: IIfA_Data (SavedVariables object containing the item information at each bag + character, server and account on server)
 //  lDataTable := FLua.GetGlobalVariable('IIfA_Data').AsTable;
 //  // Diese Methode füllt dann Server[], Items[] etc. und ordnet diese Items dann den Characters und Accounts zu
@@ -220,14 +218,14 @@ begin
       lTable := pair.Value.AsTable;
       enumAccounts := lTable.GetEnumerator;
 
-      // Iteriere durch die Accounts
+      // Iterate through accounts
       while enumAccounts.MoveNext do
       begin
         pairAccounts := enumAccounts.Current;
         lAccount := TIifaAccount.Create( pairAccounts.Key.AsString.Replace('@', '') );
         fAccounts.Add( lAccount.DisplayName, lAccount );
 
-        // Passend zum Account die Charaktere laden
+        // Get each character below the currently parsed account
         lAccount.ParseCharacters( pairAccounts.Value.AsTable );
       end;
     end;
@@ -252,7 +250,7 @@ begin
   if not Assigned(aDataTable) then
      exit;
 
-  // Parse die Arrays unterhalb von IIfA_Data
+  // Parse tables below IIfA_Data
   enum := aDataTable.GetEnumerator;
 
   //Get next entry of IIfA_Data
@@ -271,10 +269,11 @@ begin
       begin
         pairAccounts := enumAccounts.Current;
 
-        // Finde den passenden Account in der Liste
+        // TODO: Check if the currenlty read account is in IIFAHelper.hAccounts, else skip to next entry
 
         lTable := pairAccounts.Value.AsTable;
         enumAccountWide := lTable.GetEnumerator;
+
         while enumAccountWide.MoveNext do
         begin
           pairAccountWide := enumAccountWide.Current;

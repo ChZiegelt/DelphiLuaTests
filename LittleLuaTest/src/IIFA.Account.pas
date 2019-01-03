@@ -58,10 +58,10 @@ begin
   if not Assigned(AAccount) then
      exit;
 
-  // Parse die Arrays
+  // Parse table of account
   enumCharacter := AAccount.GetEnumerator;
 
-  // Iterieren durch die Charaktere
+  // Iterate through subentries (characters)
   while enumCharacter.MoveNext do
   begin
     pair := enumCharacter.Current;
@@ -72,18 +72,18 @@ begin
     lTable := pair.Value.AsTable;
     enumSettings := lTable.GetEnumerator;
 
-    // Iteriere durch die Charakter Einstellungen
+    // Iterate through character settings
     while enumSettings.MoveNext do
     begin
       pair := enumSettings.Current;
 
-      // Prüfe auf Namen
+      // Check if the entry is the last known character name
       if pair.Key.AsString = LAST_CHAR_NAME then
       begin
         lCharacter.Name := pair.Value.AsString;
       end;
     end;
-
+    //Add the character to the character list of the current account
     Add( lCharacter );
   end;
 end;
