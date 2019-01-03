@@ -62,9 +62,5 @@ interface
     ITEM_INFO_QUALITY             = 'itemQuality';
 
 
-  var
-    IIFA_SERVER_DATA:     array[1..3, 1..3] of String;
-    IIFA_SERVER_MAPPING:  TStrings;
-
 implementation
 end.

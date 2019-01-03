@@ -17,6 +17,11 @@ uses
   , IIFA.Data
   , IIFA.Settings
 
+  , IIFA.Character
+  , IIFA.Account
+  , IIFA.Server
+  , ESO.ItemData
+
   ;
 
 type
@@ -27,6 +32,13 @@ type
     FData: TIifaData;
     FSettings: TIifaSettings;
     FFileName: String;
+
+    FAccounts:    TList<TIifaAccount>;
+    FCharacters:  TList<TIifaCharacter>;
+    FServers:     TDictionary<String, TIIFAServer>;
+
+    FItems:       TESOItemDataHandler;//TLIst<TESOItemData>;
+
 
     procedure ParseTable(const aTable: ILuaTable);
   public
@@ -55,23 +67,11 @@ begin
   //Build some constant values
   //Create the server type entries if they are not already created
   //NA
-  IIFA_SERVER_DATA[1][1] := SERVER_NA;
-  IIFA_SERVER_DATA[1][2] := SERVER_NA_IP;
-  IIFA_SERVER_DATA[1][3] := SERVER_ANNOUNCEMENTS_URL;
-  //EU
-  IIFA_SERVER_DATA[2][1] := SERVER_EU;
-  IIFA_SERVER_DATA[2][2] := SERVER_EU_IP;
-  IIFA_SERVER_DATA[2][3] := SERVER_ANNOUNCEMENTS_URL;
-  //PTS
-  IIFA_SERVER_DATA[3][1] := SERVER_PTS;
-  IIFA_SERVER_DATA[3][2] := SERVER_PTS_IP;
-  IIFA_SERVER_DATA[3][3] := SERVER_ANNOUNCEMENTS_URL;
 
-  //Build the server name to index mapping
-  IIFA_SERVER_MAPPING := TStringList.Create;
-  IIFA_SERVER_MAPPING.Values[SERVER_NA]  := '1';
-  IIFA_SERVER_MAPPING.Values[SERVER_EU]  := '2';
-  IIFA_SERVER_MAPPING.Values[SERVER_PTS] := '3';
+  FServers := TDictionary<String, TIifaServer>.Create(3);
+  FServers.Add(SERVER_NA, TIifaServer.Create( SERVER_NA, SERVER_NA_IP, SERVER_ANNOUNCEMENTS_URL) );
+  FServers.Add(SERVER_EU, TIifaServer.Create( SERVER_EU, SERVER_EU_IP, SERVER_ANNOUNCEMENTS_URL) );
+  FServers.Add(SERVER_PTS, TIifaServer.Create( SERVER_PTS, SERVER_PTS_IP, SERVER_ANNOUNCEMENTS_URL) );
 
   //Load the LUAWrapper library
   FLua := TLua.Create;
@@ -106,6 +106,8 @@ var
   pair: TLuaKeyValuePair;
 
   List: TStringList;
+  lAccountIdx, lCharacterIdx: Integer;
+
 begin
   Result := False;
 
@@ -132,7 +134,38 @@ begin
   // Jetzt die Arrays aufdröseln und in Delphi Objekte speichern
   //->Beim Verwenden von .Table := wird die in der Klasse IifaSettings gesetzte "write" Methode "setTable" aufgerufen!
   Settings.Table := FLua.GetGlobalVariable('IIfA_Settings').AsTable;
-  Data.Table     := FLua.GetGlobalVariable('IIfA_Data').AsTable;
+
+  // Es existiert jetzt eine Liste von Accounts und Characters
+  //IIFa_Settings->Accounts->Characters
+  // Verschiebe jetzt die Character und Accounts in die Liste des Helpers
+  for lAccountIdx := 0 to Settings.Count -1 do
+  begin
+    FAccounts.Add( Settings.ExtractAt( lAccountIdx ) );
+
+    for lCharacterIdx := 0 to FAccounts[ lAccountIdx ].Count -1 do
+        FCharacters.Add( FAccounts[ lAccountIdx ].ExtractAt( lCharacterIdx ) );
+  end;
+
+ // FItems.byLink['2345'].
+
+  //IIFa_Data->Accounts->AccountWide->Server->DatenbankVersion->Item->Location->Characters/Bag
+  //DataTable     := FLua.GetGlobalVariable('IIfA_Data').AsTable;
+
+  // Diese Methode füllt dann Server[], Items[]
+  //ParseDataTable( DataTable );
+  // Durchsuchen von Servern und Pürfen ob vorhanden (nur Dictionary)
+//  if FServers.ContainsKey('serverPair.Key.ToString') then
+//     lServer := FServers.Items['serverPair.Key.ToString'];
+
+  // Durchsuchen von Accounts und Pürfen ob vorhanden
+//  for lAccount in FAccounts do
+//  begin
+//    if lAccount.DisplayName = "Wahtever" then
+//    begin
+//   end;
+//  end;
+
+
 
   FFileName := lFile;
   Result := true;

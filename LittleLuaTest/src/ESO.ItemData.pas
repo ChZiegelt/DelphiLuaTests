@@ -18,6 +18,25 @@ uses
   ;
 
 type
+  TItemIdIndex = (idx0, idx1, idxItemId, idx3 {, ...});
+
+  TESOItemLink = class
+  strict private
+    FItemId: Integer;
+    FItemLink: String;
+
+    FItemLinkData: TArray<String>;
+  private
+    procedure setItemLink(const Value: String);
+  public
+
+    property ItemId: Integer read FItemId;  // write FItemId;
+    property ItemLink: String read FItemLink write setItemLink;
+
+    constructor Create(const AItemLink: String = '');
+  end;
+
+
  // Klasse für Gegenstände aus LUA Dateien
   TESOItemData= class
   strict private
@@ -31,14 +50,22 @@ type
     FCPLevel: Integer;
     FName: String;
     FItemInstanceOrUniqueId: String;
-    FItemLink: String;
+
+    FItemLink: TESOItemLink;
+
+    //RServer: TESOServer;
   private
-    procedure setItemLink(const Value: String);
+
+    //procedure setItemLink(const Value: String);
+    function getItemID: Integer;
+    function getItemLinkString: String;
+    procedure setItemLinkString(const Value: String);
+
   public
     property BagId: Integer read FBagId write FBagId;
     property SlotIndex: Integer read FSlotIndex write FSlotIndex;
     property SlotCount: Integer read FSlotCount write FSlotCount;
-    property ItemId: Integer read FItemId write FItemId;
+
     property FilterType: Integer read FFilterType write FFilterType;
     property Quality: Integer read FQuality write FQuality;
     property Level: Integer read FLevel write FLevel;
@@ -46,9 +73,34 @@ type
 
     property Name: String read FName write FName;
     property ItemInstanceOrUniqueId: String read FItemInstanceOrUniqueId write FItemInstanceOrUniqueId;
-    property ItemLink: String read FItemLink write setItemLink;
+
+    // Proxy Methoden - Zugriff auf FItemLink
+    property ItemId: Integer read getItemID; // write FItemId;
+    property ItemLinkStr: String read getItemLinkString write setItemLinkString;
+
+    property ItemLink: TESOItemLink read FItemLink write FItemLink;
+
+    //property Server: TESOServer read RServer write RServer;
 
     constructor Create( );
+    destructor Destroy( ); override;
+  end;
+
+
+
+  TESOItemDataHandler = class
+
+    // die Liste der Items - nur hier freigeben und createn
+    List: TList< TESOItemData >;
+
+    // Dictionaries für jede relevante zu suchende Eigenschaft
+    byName:  TDictionary< String, TESOItemData >;  // eventuell doppelt vorhanden ?
+    byID:    TDictionary< Integer, TESOItemData >;
+    byLink:  TDictionary< String, TESOItemData >;
+
+    procedure AddItem( const AItem: TESOItemData );
+
+    function SearchByQuality( AQuality: Integer ): TList< TESOItemData >;
   end;
 
 
@@ -56,26 +108,78 @@ implementation
 
 { TESOItemData }
 
+
 constructor TESOItemData.Create;
 begin
- inherited Create;
+  FItemLink := TESOItemLink.Create();
 end;
 
-function GetItemIdFromItemLink(ItemLink: String): Integer;
-var itemId: Integer;
+destructor TESOItemData.Destroy;
 begin
-  result := itemId;
+  FreeAndNil(FItemLink);
+
+  inherited;
+end;
+
+function TESOItemData.getItemID: Integer;
+begin
+  if Assigned(FItemLink) then
+     Result := FItemLink.ItemId
+  else
+     Result := -1;
+end;
+
+function TESOItemData.getItemLinkString: String;
+begin
+  if Assigned(FItemLink) then
+     Result := FItemLink.ItemLink
+  else
+     Result := '';
 end;
 
 
-procedure TESOItemData.setItemLink(const Value: String);
+procedure TESOItemData.setItemLinkString(const Value: String);
 begin
+  if Assigned(FItemLink) then
+     FItemLink.ItemLink := Value
+  else
+     FItemLink.ItemLink := '';
+end;
+
+{ TEsoItemLink }
+
+constructor TEsoItemLink.Create(const AItemLink: String);
+begin
+  inherited Create;
+
+  ItemLink := AItemLink;
+end;
+
+procedure TEsoItemLink.setItemLink(const Value: String);
+begin
+  setLength( FItemLinkData, 0);
+
   FItemLink := Value;
-  //Check if the itemId is already set. If not: Read it from the itemLink and set it too
-  if ( Value <> '') and (FItemId = 0) then
-  begin
-//    FItemId := self.GetItemIdFromItemLink(Value)
-  end;
+  // Parse itemLink and split at : into FItemId, ...
+  FItemLinkData := Value.Split([':']);
+
+  if Length( FItemLinkData ) > ord(idxItemId)  then
+     FItemId := FItemLinkData[ord(idxItemId)].ToInteger;
+
+end;
+
+{ TESOItemDataHandler }
+
+procedure TESOItemDataHandler.AddItem(const AItem: TESOItemData);
+begin
+  List.Add( AItem );
+  byName.TryAdd( AItem.Name, AItem );
+  //byID.TryAdd(.)
+end;
+
+function TESOItemDataHandler.SearchByQuality(
+  AQuality: Integer): TList<TESOItemData>;
+begin
 
 end;
 

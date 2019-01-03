@@ -37,7 +37,7 @@ var
   pairServerKeyStr: String;
   lTable: ILuaTable;
   lServer: TIifaServer;
-  lServerType: TIifaServerType;
+  //lServerType: TIifaServerType;
   lServerIndex: byte;
   lAccount: TIifaAccount;
   str: String;
@@ -67,6 +67,8 @@ begin
       while enumAccounts.MoveNext do
       begin
         pairAccounts := enumAccounts.Current;
+
+        // Finde den passenden Account in der Liste
 
         lTable := pairAccounts.Value.AsTable;
         enumAccountWide := lTable.GetEnumerator;
@@ -114,11 +116,12 @@ begin
                         //TODO: How to find out if the server entry was not created already?
                         //ONLY CREATE IT ONCE AND ONLY ASSIGN THE ACCOUNTS TO EACH SERVER ONCE!
                         //Map the server String to it's id
-                        lServerIndex := IIFA_SERVER_MAPPING.Values[pairServerKeyStr].ToInteger();
+                        //lServerIndex := IIFA_SERVER_MAPPING.Values[pairServerKeyStr].ToInteger();
                         if lServerIndex > 0 then
                         begin
                           //Create a new server instance, and assign the current acount to it
-                          lServerType := TIifaServerType.Create(IIFA_SERVER_DATA[lServerIndex][1], IIFA_SERVER_DATA[lServerIndex][2], IIFA_SERVER_DATA[lServerIndex][3]);
+                          //lServerType := TIifaServerType.Create(IIFA_SERVER_DATA[lServerIndex][1], IIFA_SERVER_DATA[lServerIndex][2], IIFA_SERVER_DATA[lServerIndex][3]);
+                          (*
                           lServer     := TIifaServer.Create(lServerType);
                           //Create the currently selected account new and assign it to the server, if it's not already in it
                           lAccount := TIifaAccount.Create( pairAccounts.Key.AsString.Replace('@', '') );
@@ -131,6 +134,7 @@ begin
                           begin
                             self.Add(lServer);
                           end;
+                          *)
                         end;
 
                         lTable := pairDB.Value.AsTable;

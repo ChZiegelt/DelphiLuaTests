@@ -18,7 +18,7 @@ uses
   ;
 
 type
-  TIifaServerType = class
+  TIifaServer = class
   strict private
     FName:           String;
     FIP:             String;
@@ -31,36 +31,13 @@ type
     constructor Create( Name, IP, OnlineCheckURL: String );
   end;
 
-  // Klasse für die IIfA Daten
-  //|-> beinhällt die Accounts
-  //|--> beinhalten jeweils die Charaktere je Account
-  //|---> beinhalten wiederum jeweils die Bags je Charakter
-  //|----> Beinhalten wiederum jeweils die Items je Bag
-  TIifaServer = class( TList<TIifaAccount> )
-  strict private
-    FServerType: TIifaServerType;
-  private
-  public
-
-    constructor Create( const AServerType: TIifaServerType );
-  end;
-
 
 implementation
 
+
 { TIifaServer }
 
-constructor TIifaServer.Create(const AServerType: TIifaServerType);
-begin
-  inherited Create;
-
-  FServerType := AServerType;
-end;
-
-
-{ TIifaServerType }
-
-constructor TIifaServerType.Create(Name, IP, OnlineCheckURL: String);
+constructor TIifaServer.Create(Name, IP, OnlineCheckURL: String);
 begin
   inherited Create;
 
