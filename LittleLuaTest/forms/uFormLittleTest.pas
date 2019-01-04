@@ -11,6 +11,10 @@ uses
 
   , System.Generics.Collections
   , Lua
+
+  // ESO
+  , ESO.ItemData
+
   // IIFA
   , IIFA.Helper
   , IIFA.Account
@@ -40,8 +44,6 @@ type
 
     IifaHelper: TIIFAHelper;
 
-    procedure ParseTable(const aTable: ILuaTable);
-
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
 
@@ -57,52 +59,6 @@ implementation
 
 
 {$R *.fmx}
-
-
-procedure TForm1.ParseTable( const aTable: ILuaTable );
-var
-  enum: ILuaTableEnumerator;
-  pair: TLuaKeyValuePair;
-
-begin
-  enum := aTable.GetEnumerator;
-
-  while enum.MoveNext do
-  begin
-    pair := enum.Current;
-
-    case pair.Value.VariableType of
-      VariableNone: begin
-
-      end;
-
-      VariableBoolean: begin
-
-      end;
-
-      VariableInteger, VariableNumber: begin
-
-      end;
-
-      VariableString: begin
-
-      end;
-
-      VariableTable, VariableUserData: begin
-        ParseTable( Pair.Value.AsTable );
-
-      end;
-
-      VariableFunction: begin
-
-      end;
-
-    end;
-  end;
-end;
-
-
-
 
 procedure TForm1.AfterConstruction;
 begin
@@ -124,6 +80,8 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 var
   lAccount: TIifaAccount;
+  lItem:    TESOItemData;
+  lItemList:  TList<TESOItemData>;
   lStrings: TStrings;
 begin
   IifaHelper.ParseFile();
@@ -138,6 +96,15 @@ begin
     memo.Lines.AddStrings( lStrings );
     FreeAndNil(lStrings);
   end;
+
+  //Items
+  lItemList := IifaHelper.Items.GetItemList();
+  if Assigned(lItemList)  then
+    for lItem in lItemList do
+    begin
+      memo.Lines.Add( lItem.toString() );
+    end;
+
 end;
 
 end.

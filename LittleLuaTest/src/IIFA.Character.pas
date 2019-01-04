@@ -24,7 +24,7 @@ type
   public
     property CollectGuildBankData: Boolean read FCollectGuildBankData write FCollectGuildBankData;
 
-    function toString(): String;
+    function toString(): String; override;
   end;
 
 implementation

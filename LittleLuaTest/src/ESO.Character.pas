@@ -28,7 +28,7 @@ uses
     property ID:    TESOCharacterId read FID write FID;
 
     constructor Create( const AName: String = ''; const AID: TESOCharacterId = '' );
-    destructor  Destroy();
+    destructor  Destroy(); override;
   end;
 
 implementation

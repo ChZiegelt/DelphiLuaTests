@@ -33,6 +33,7 @@ type
     property OnlineCheckURL: String read FOnlineCheckURL write FOnlineCheckURL;
 
     constructor Create( Name, IP, OnlineCheckURL: String );
+    destructor Destroy; override;
   end;
 
 
@@ -48,6 +49,12 @@ begin
   FName           := Name;
   FIP             := IP;
   FOnlineCheckURL := OnlineCheckURL;
+end;
+
+destructor TESOServer.Destroy;
+begin
+
+  inherited;
 end;
 
 end.

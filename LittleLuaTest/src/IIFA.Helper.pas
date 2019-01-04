@@ -160,7 +160,7 @@ begin
 
   //Get the global variable contents from lua routines: IIfA_Data (SavedVariables object containing the item information at each bag + character, server and account on server)
   lDataTable := FLua.GetGlobalVariable('IIfA_Data').AsTable;
-  // Thos method will fill fServer[], fItems[] etc.
+  // This method will fill fServer[], fItems[] etc.
   ParseDataTable( lDataTable );
 
   FSavedVariablesFileName := lFile;
@@ -215,14 +215,13 @@ end;
 // the data table will be parsed now to get the items
 procedure TIIFAHelper.ParseDataTable( const aDataTable: ILuaTable );
 var
-  enum, enumAccounts, enumAccountWide, enumData, enumServer, enumDB, enumItems: ILuaTableEnumerator;
-  pair, pairAccounts, pairAccountWide, pairData, pairServer, pairDB, pairItems: TLuaKeyValuePair;
-  lDisplayName: String;
-  pairServerKeyStr: String;
+  enum, enumAccounts, enumAccountWide, enumData, enumServer, enumDB, enumItems, enumItemData: ILuaTableEnumerator;
+  pair, pairAccounts, pairAccountWide, pairData, pairServer, pairDB, pairItems, pairItemData: TLuaKeyValuePair;
+  lDisplayName, pairServerKeyStr, lItemIdOrLink, sPairItemKeyStr, sPairItemValueStr: String;
   lTable: ILuaTable;
   lServer: TESOServer;
   lAccount: TIifaAccount;
-  lItemIdOrLink: String;
+  lItem: TESOItemData;
 begin
   // Wenn nicht nil, versuche den Inhalt zu verstehen
   if not Assigned(aDataTable) then
@@ -285,10 +284,10 @@ begin
                   if FServers.ContainsKey(pairServerKeyStr) then
                   begin
                     lServer := FServers.Items[pairServerKeyStr];
-                    //TODO:
-                    //Server "lServer" where the items are on is known, account "lAccount" of the characters of these items is also known
-                    //How to "connect" those now properly so one can search and see the dependencies?
 
+                    { TODO :
+                    Server "lServer" is known, account "lAccount" is also known. items need to be parsed and then stored with their bagId, slotindex (if given) and the other TESOItemData fields
+                    How to "connect" those (Server, account, item) now properly so one can search and see the dependencies? }
                     lTable := pairServer.Value.AsTable;
                     enumDB := lTable.GetEnumerator;
 
@@ -304,9 +303,59 @@ begin
                         while enumItems.MoveNext do
                         begin
                           pairItems := enumItems.Current;
-                          //lItem := TESOItem.Create( pairItems.Key.AsString );
-                          //fItems.Add( lItem );
                           lItemIdOrLink := pairItems.Key.AsString;
+
+                          //Create an item
+                          lItem := TESOItemData.Create( lItemIdOrLink );
+
+                          //Iterate over the other itemData and add the found information to the item
+                          lTable := pairItems.Value.AsTable;
+                          enumItemData := lTable.GetEnumerator;
+                          while enumItemData.MoveNext do
+                          begin
+                            pairItemData := enumItemData.Current;
+                            sPairItemKeyStr := pairItemData.Key.AsString;
+
+                            //Read the locations of the item
+                            if sPairItemKeyStr = ENTRY_LOCATIONS then
+                            begin
+
+                            end
+                            else
+                            begin
+                              // Get the value of the current table key as string
+                              sPairItemValueStr := pairItemData.Value.AsString;
+
+                              //Read other data like filterType, quality, name, itemInstanceOrUniqueId or the itemlink (CraftBag item)
+                              if sPairItemKeyStr = ITEM_INFO_ITEMLINK then
+                              begin
+                                //ItemLinkStr will also set TESOItemData.ItemLink(TESOItemLink).ItemLink
+                                lItem.ItemLinkStr := sPairItemValueStr;
+                              end
+                              else if sPairItemKeyStr = ITEM_INFO_NAME then
+                              begin
+                                lItem.Name := sPairItemValueStr;
+                              end
+                              else if sPairItemKeyStr = ITEM_INFO_INSTANCEORUNIQUEID then
+                              begin
+                                lItem.ItemInstanceOrUniqueId := sPairItemValueStr;
+                              end
+                              else if sPairItemKeyStr = ITEM_INFO_FILTERTYPE then
+                              begin
+                                lItem.FilterType := sPairItemValueStr.ToInteger;
+                              end
+                              else if sPairItemKeyStr = ITEM_INFO_QUALITY then
+                              begin
+                                lItem.Quality := sPairItemValueStr.ToInteger;
+                              end;
+                            end
+
+                          end;
+
+                          // Set the items server
+                          lItem.Server := lServer;
+                          //Add the item to the IIfAHelper FItems (search helper) now
+                          FItems.AddItem(lItem);
                         end;
 
                       end;

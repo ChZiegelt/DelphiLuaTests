@@ -57,11 +57,54 @@ type
                         ESOil_PotionDataOrWritReward        //23
   );
 
+  (* ESOil_Subtype contents change on each major ESO update :-( But a "somehow" way to determine what number results in which quality and Veteran level is described in this lua code.
+    !!!Attention: This will ONLY work for crafted items (where ESOil_IsCrafted = 1, but NOT for dropped items!!!
+
+      -- Each update has its own definition of the lower bits
+      -- Classic: Lower bits code quality and have "reducer" bits
+      function addon:CreateSubItemId(level, champ, quality)
+          quality = quality or 1
+          quality = math.max(0, quality - 1)
+          level = math.max(1, math.min(50, level))
+          local subId
+          if level < 50 or champ == nil then
+              if level < 4 then
+                  subId = 30
+              elseif level < 6 then
+                  subId = 25
+              else
+                  subId = 20
+              end
+              subId = subId + quality
+          else
+              if champ < 110 then
+                  champ = math.max(10, champ)
+                  -- introduce of vet silver and gold
+                  subId = 124 + math.floor(champ / 10) + quality * 10
+              elseif champ < 130 then
+                  -- Craglorn
+                  subId = 236 + math.floor((champ - 110) / 10) * 18 + quality
+              elseif champ < 150 then
+                  -- Upper Craglorn
+                  subId = 272 + math.floor((champ - 130) / 10) * 18 + quality
+              else
+                  champ = math.min(GetChampionPointsPlayerProgressionCap(), champ)
+                  subId = 308 + math.floor((champ - 150) / 10) * 58 + quality
+              end
+          end
+          return subId
+      end
+
+   //function GetChampionPointsPlayerProgressionCap returns the maximum CP value, currently 160 at 2019-01-04
+  *)
+
   TESOItemLink = class
   strict private
+    //The integer itemId of the item (automatically split from itemLink inside function setItemLink, called in constructor)
     FItemId: Integer;
+    //The itemLInk as whole string e.g. |H1:item:45810:1:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|hJode|h
     FItemLink: String;
-
+    //Array of split (at char ':') itemlink -> See above at definition of TESOItemLinkParts for details
     FItemLinkData: TArray<String>;
   private
     procedure setItemLink(const Value: String);
@@ -80,7 +123,7 @@ type
     FBagId: TESOBag;
     FSlotIndex: Integer;
     FSlotCount: Integer;
-    FItemId: Integer;
+    //FItemId: Integer;
     FFilterType: Integer;
     FQuality: Integer;
     FLevel: Integer;
@@ -115,12 +158,14 @@ type
     property ItemLink: TESOItemLink read FItemLink write FItemLink;
 
     // Proxy Methoden - Zugriff auf FItemLink
-    property ItemId: Integer read getItemID; // write FItemId;
+    property ItemId: Integer read getItemId; // write FItemId;
     property ItemLinkStr: String read getItemLinkString write setItemLinkString;
 
     property Server: TESOServer read RServer write RServer;
 
-    constructor Create( );
+    function toString(): String; override;
+
+    constructor Create( const AItemLink: String = '' );
     destructor Destroy( ); override;
   end;
 
@@ -133,15 +178,21 @@ type
 
    public
     // Dictionaries für jede relevante zu suchende Eigenschaft
-    byName:  TDictionary< String, TESOItemData >;  // eventuell doppelt vorhanden ?
+    byName:  TDictionary< String,  TESOItemData >;
     byID:    TDictionary< Integer, TESOItemData >;
-    byLink:  TDictionary< String, TESOItemData >;
+    byLink:  TDictionary< String,  TESOItemData >;
 
     procedure AddItem( const AItem: TESOItemData );
     procedure RemoveItem( const AItem: TESOItemData );
     procedure Clear();
 
+    function GetItemList(): TList< TESOItemData >;
+    function toStrings(): TStrings;
+
     function SearchByQuality( AQuality: Integer ): TList< TESOItemData >;
+
+    constructor Create();
+    destructor Destroy(); override;
   end;
 
   //Search Items via helper class TESOItemDataHandler
@@ -150,12 +201,24 @@ type
 
 implementation
 
+{ Helper functions }
+function IsInteger(value : String): Boolean;
+begin
+  try
+    value.ToInteger();
+  except
+    Result := false;
+    exit;
+  end;
+  Result:=true;
+end;
+
+
 { TESOItemData }
 
-
-constructor TESOItemData.Create;
+constructor TESOItemData.Create(const AItemLink: String = '');
 begin
-  FItemLink := TESOItemLink.Create();
+  FItemLink := TESOItemLink.Create(AItemLink);
 end;
 
 destructor TESOItemData.Destroy;
@@ -165,7 +228,7 @@ begin
   inherited;
 end;
 
-function TESOItemData.getItemID: Integer;
+function TESOItemData.getItemId: Integer;
 begin
   if Assigned(FItemLink) then
      Result := FItemLink.ItemId
@@ -191,18 +254,39 @@ begin
 end;
 
 
+function TESOItemData.toString: String;
+begin
+  Result := Format( '> ID: %s', [String(ItemId)]);
+
+//  Result := Format( '> ID: %s, Name: %s, Quality:  %s, FilterType: %s, ItemLink: %s' ,
+//                      [String(ItemId), Name , Quality, FilterType, ItemLinkStr]);
+end;
+
 { TESOItemLink }
 
 constructor TEsoItemLink.Create(const AItemLink: String);
 begin
   inherited Create;
 
-  ItemLink := AItemLink;
+  if AItemLink = '' then exit;
+
+  //Check if the itemLink is really a link, or an itemId (from CraftBag entry e.g.)
+  if AItemLink.IndexOf(':') = -1  then
+  begin
+    //It's no itemlink but maybe an itemId? Check if the value in ItemLink is only an integer value
+    if IsInteger(AItemLink) then
+      FItemId := AItemLink.ToInteger()
+  end
+  else
+    //It's an itemlink. Call function setItemLink and try to split the itemId from the itemLink
+    ItemLink := AItemLink;
 end;
 
 procedure TEsoItemLink.setItemLink(const Value: String);
 begin
   setLength( FItemLinkData, 0);
+  if Value = '' then exit;
+  
 
   FItemLink := Value;
   // Parse itemLink and split at : into FItemId, ...
@@ -215,13 +299,38 @@ end;
 
 { TESOItemDataHandler }
 
-
 procedure TESOItemDataHandler.Clear;
 begin
   byName.Clear;
   byId.Clear;
   byLink.Clear;
   List.Clear;
+end;
+
+constructor TESOItemDataHandler.Create;
+begin
+  inherited Create;
+  byName  :=  TDictionary< String,  TESOItemData >.Create;
+  byID    :=  TDictionary< Integer, TESOItemData >.Create;
+  byLink  :=  TDictionary< String,  TESOItemData >.Create;
+  List    :=  TList< TESOItemData >.Create;
+end;
+
+destructor TESOItemDataHandler.Destroy;
+begin
+  FreeAndNil(byName);
+  FreeAndNil(byID);
+  FreeAndNil(byLink);
+  FreeAndNil(List);
+
+  inherited Destroy;
+end;
+
+function TESOItemDataHandler.GetItemList: TList<TESOItemData>;
+begin
+ result := nil;
+ if Assigned(List) then
+  result := List;
 end;
 
 procedure TESOItemDataHandler.RemoveItem(const AItem: TESOItemData);
@@ -234,9 +343,9 @@ end;
 
 procedure TESOItemDataHandler.AddItem(const AItem: TESOItemData);
 begin
-  byName.TryAdd( AItem.Name, AItem );
-  byId.TryAdd(AItem.ItemId, AItem);
-  byLink.TryAdd(AItem.ItemLinkStr, AItem);
+  byName.AddOrSetValue(AItem.Name, AItem);
+  byId.AddOrSetValue(AItem.ItemId, AItem);
+  byLink.AddOrSetValue(AItem.ItemLinkStr, AItem);
   List.Add( AItem );
 end;
 
@@ -252,6 +361,19 @@ begin
     if lESOItemData.Quality = AQuality then
       lResult.Add(lESOItemData);
   result := lResult;
+end;
+
+function TESOItemDataHandler.toStrings: TStrings;
+var
+  lItemData: TESOItemData;
+begin
+  Result := TStringList.Create;
+
+  for lItemData in Self.List do
+  begin
+    Result.Add( lItemData.toString() );
+  end;
+
 end;
 
 end.

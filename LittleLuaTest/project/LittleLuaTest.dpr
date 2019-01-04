@@ -9,7 +9,6 @@ uses
   IIFA.Helper in '..\src\IIFA.Helper.pas',
   IIFA.Account in '..\src\IIFA.Account.pas',
   IIFA.Character in '..\src\IIFA.Character.pas',
-  IIFA.Data in '..\src\IIFA.Data.pas',
   IIFA.Constants in '..\src\IIFA.Constants.pas',
   ESO.Constants in '..\src\ESO.Constants.pas',
   ESO.ItemData in '..\src\ESO.ItemData.pas',

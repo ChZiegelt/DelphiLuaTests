@@ -136,7 +136,6 @@
         <DCCReference Include="..\src\IIFA.Helper.pas"/>
         <DCCReference Include="..\src\IIFA.Account.pas"/>
         <DCCReference Include="..\src\IIFA.Character.pas"/>
-        <DCCReference Include="..\src\IIFA.Data.pas"/>
         <DCCReference Include="..\src\IIFA.Constants.pas"/>
         <DCCReference Include="..\src\ESO.Constants.pas"/>
         <DCCReference Include="..\src\ESO.ItemData.pas"/>

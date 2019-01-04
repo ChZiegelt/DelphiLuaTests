@@ -29,7 +29,7 @@ type
     procedure ParseCharacters(const AAccount: ILuaTable); virtual; abstract;
 
     constructor Create( const ADisplayName: String = '');
-    destructor Destroy();
+    destructor Destroy(); override;
   end;
 
 

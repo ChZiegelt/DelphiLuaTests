@@ -24,6 +24,7 @@ type
     property BagId: TESOBagIds read FBagId write FBagId;
 
     constructor Create( const ABagId: TESOBagIds );
+    destructor Destroy; override;
   end;
 
 
@@ -37,6 +38,12 @@ begin
   inherited Create;
 
   FBagId := ABagId;
+end;
+
+destructor TESOBag.Destroy;
+begin
+
+  inherited;
 end;
 
 end.
