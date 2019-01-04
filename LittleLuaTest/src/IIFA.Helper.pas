@@ -283,8 +283,8 @@ begin
 
                   //Get next entry and check if it is one of the existing servers
                   if FServers.ContainsKey(pairServerKeyStr) then
+                  begin
                     lServer := FServers.Items[pairServerKeyStr];
-
                     //TODO:
                     //Server "lServer" where the items are on is known, account "lAccount" of the characters of these items is also known
                     //How to "connect" those now properly so one can search and see the dependencies?
@@ -312,7 +312,7 @@ begin
                       end;
 
                     end;
-
+                  end;
                 end;
 
               end;
