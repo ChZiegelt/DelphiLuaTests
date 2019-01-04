@@ -12,14 +12,50 @@ uses
   , System.Generics.Collections
   , Lua
 
+  , ESO.Constants
+  , ESO.Account
+  , ESO.Character
+  , ESO.Server
+  , ESO.Bag
+
   , IIFA.Constants
   , IIFA.Character
-  , ESO.Server
 
   ;
 
 type
-  TESOItemIdIndex = (idx0, idx1, idxItemId, idx3 {, ...});
+  //ESO itemLink will be of this format:
+  //|H%d:item:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s|hItemNameAsString|h
+  //Example: |H1:item:45810:1:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|hJode|h
+  // Get more information at: https://wiki.esoui.com/ZO_LinkHandler_CreateLink#ITEM_LINK_TYPE
+  // and https://en.uesp.net/wiki/Online:Item_Link
+  TESOItemLinkParts = ( ESOil_LinkStyle,                    //1
+                        ESOil_LinkType,                     //2
+                        ///////////////////////////////////
+                        // Itemlink'S data starts here (21 entries)
+                        ///////////////////////////////////
+                        ESOil_ItemId,                       //3
+                        ESOil_Subtype,                      //4 Quality + VR level info
+                        ESOil_Level,                        //5 Only 1 too 50, no VR level. VR level is indicated with subtype field above. No way known to calculate quality and VR level from these values outside of the game :-( Inside you can use API functions GetItemLinkQuality(itemLink) etc.
+                        ESOil_EnchantId,                    //6
+                        ESOil_EnchantSubType,               //7
+                        ESOil_EnchantLevel,                 //8
+                        ESOil_TransmuteTraitOrMasterWrit1,  //9 Holds transmutation trait of transmuted items, or the Master writ's requirement 1
+                        ESOil_MasterWrit2,                  //10
+                        ESOil_MasterWrit3,                  //11
+                        ESOil_MasterWrit4,                  //12
+                        ESOil_MasterWrit5,                  //13
+                        ESOil_MasterWrit6,                  //14
+                        ESOil_unknown1,                     //15  still unknown
+                        ESOil_unknown2,                     //16  still unknown
+                        ESOil_unknown3,                     //17  still unknown
+                        ESOil_ItemStyle,                    //18
+                        ESOil_IsCrafted,                    //19
+                        ESOil_IsBound,                      //20
+                        ESOil_IsStolen,                     //21
+                        ESOil_EnchantChargesOrCondition,    //22
+                        ESOil_PotionDataOrWritReward        //23
+  );
 
   TESOItemLink = class
   strict private
@@ -41,7 +77,7 @@ type
  // Klasse für Gegenstände aus LUA Dateien
   TESOItemData= class
   strict private
-    FBagId: Integer; //or maybe "TIifaBag" -> yet to create
+    FBagId: TESOBag;
     FSlotIndex: Integer;
     FSlotCount: Integer;
     FItemId: Integer;
@@ -54,7 +90,8 @@ type
 
     FItemLink: TESOItemLink;
 
-    RServer: TESOServer;
+    //References for lookup
+    RServer:      TESOServer;
   private
 
     //procedure setItemLink(const Value: String);
@@ -63,7 +100,7 @@ type
     procedure setItemLinkString(const Value: String);
 
   public
-    property BagId: Integer read FBagId write FBagId;
+    property BagId: TESOBag read FBagId write FBagId;
     property SlotIndex: Integer read FSlotIndex write FSlotIndex;
     property SlotCount: Integer read FSlotCount write FSlotCount;
 
@@ -80,7 +117,6 @@ type
     // Proxy Methoden - Zugriff auf FItemLink
     property ItemId: Integer read getItemID; // write FItemId;
     property ItemLinkStr: String read getItemLinkString write setItemLinkString;
-
 
     property Server: TESOServer read RServer write RServer;
 
@@ -107,6 +143,9 @@ type
 
     function SearchByQuality( AQuality: Integer ): TList< TESOItemData >;
   end;
+
+  //Search Items via helper class TESOItemDataHandler
+ // FItems.byLink['12345'].
 
 
 implementation
@@ -169,8 +208,8 @@ begin
   // Parse itemLink and split at : into FItemId, ...
   FItemLinkData := Value.Split([':']);
 
-  if Length( FItemLinkData ) > ord(idxItemId)  then
-     FItemId := FItemLinkData[ord(idxItemId)].ToInteger;
+  if Length( FItemLinkData ) > ord(ESOil_ItemId)  then
+     FItemId := FItemLinkData[ord(ESOil_ItemId)].ToInteger;
 
 end;
 

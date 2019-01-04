@@ -12,21 +12,16 @@ uses
   , System.Generics.Collections
   , Lua
 
+  , ESO.Character
   ;
 
 type
 
-  TCharacterID = string;
-
-  TIIfACharacter = class
+  TIIfACharacter = class(TESOCharacter)
   strict private
-    FName: String;
-    FID: TCharacterID;
     FCollectGuildBankData: Boolean;
 
   public
-    property Name: String read FName write FName;
-    property ID: TCharacterID read FID write FID;
     property CollectGuildBankData: Boolean read FCollectGuildBankData write FCollectGuildBankData;
 
     function toString(): String;
@@ -37,9 +32,9 @@ implementation
 { TCharacter }
 
 
-function TIifaCharacter.toString: String;
+function TIIfACharacter.toString: String;
 begin
-  Result := Format( '  ID: %s   Name: %s   CollectGuildBankData:  %s', [String(FID), FName , FCollectGuildBankData.ToString]);
+  Result := Format( '  ID: %s   Name: %s   CollectGuildBankData:  %s', [String(ID), Name , FCollectGuildBankData.ToString]);
 end;
 
 

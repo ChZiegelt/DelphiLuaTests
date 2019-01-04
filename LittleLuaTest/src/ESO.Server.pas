@@ -13,6 +13,7 @@ uses
   , Lua
 
   , ESO.Constants
+  , ESO.Account
 
   ;
 
@@ -22,6 +23,10 @@ type
     FName:           String;
     FIP:             String;
     FOnlineCheckURL: String;
+
+    //Referenced
+    RAccount: TESOAccount;
+
   public
     property Name: String read FName write FName;
     property IP: String read FIP write FIP;
@@ -34,7 +39,7 @@ type
 implementation
 
 
-{ TIifaServer }
+{ TESOServer }
 
 constructor TESOServer.Create(Name, IP, OnlineCheckURL: String);
 begin

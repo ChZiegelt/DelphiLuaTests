@@ -12,37 +12,35 @@ uses
   , System.Generics.Collections
   , Lua
 
+  , ESO.Account
+  , ESO.Character
+
   , IIFA.Constants
   , IIFA.Character
 
   ;
 
 type
-  // Klasse für Accounts aus LUA Dateien
-  TIIfAAccount = class( TList< TIifaCharacter >  )
+  // Class for read accounts from IIFA.lua SavedVariables file
+  TIIfAAccount = class( TESOAccount )
   strict private
-    FDisplayName: String;
   public
-    property DisplayName: String read FDisplayName write FDisplayName;
-
-    procedure ParseCharacters(const AAccount: ILuaTable);
+    procedure ParseCharacters(const AAccount: ILuaTable); override;
     function toStrings(): TStrings;
-
-    constructor Create( const ADisplayName: String );
   end;
+
+  // Durchsuchen von Accounts und Prüfen ob account mit Name vorhanden
+//  for lAccount in FAccounts do
+//  begin
+//    if lAccount.DisplayName = "Wahtever" then
+//    begin
+//   end;
+//  end;
 
 
 implementation
 
-{ TAccount }
-
-constructor TIifaAccount.Create(const ADisplayName: String);
-begin
-  inherited Create;
-
-  FDisplayName := ADisplayName;
-end;
-
+{ TIIfAAccount }
 
 
 procedure TIifaAccount.ParseCharacters(const AAccount: ILuaTable);
@@ -51,7 +49,7 @@ var
   pair: TLuaKeyValuePair;
   lTable: ILuaTable;
 
-  lCharacter: TIifaCharacter;
+  lCharacter: TIIfACharacter;
 
 begin
   // Wenn nicht nil, versuche den Inhalt zu verstehen
@@ -89,9 +87,9 @@ begin
 end;
 
 
-function TIifaAccount.toStrings: TStrings;
+function TIIfAAccount.toStrings: TStrings;
 var
-  lCharacter: TIifaCharacter;
+  lCharacter: TESOCharacter;
 begin
   Result := TStringList.Create;
 

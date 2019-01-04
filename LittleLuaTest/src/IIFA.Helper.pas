@@ -14,6 +14,7 @@ uses
 
   , ESO.Constants
   , ESO.Server
+  , ESO.Character
   , ESO.ItemData
 
   , IIFA.Constants
@@ -27,19 +28,18 @@ type
   strict private
     FLua: TLua;
 
-    FFileName: String;
+    FSavedVariablesFileName: String;
 
-    FAccounts:    TDictionary<String, TIifaAccount>;
-    FCharacters:  TDictionary<String, TIifaCharacter>;
     FServers:     TDictionary<String, TESOServer>;
-
+    FAccounts:    TDictionary<String, TIIfAAccount>;
+    FCharacters:  TDictionary<String, TIIfACharacter>;
     FItems:       TESOItemDataHandler;//TLIst<TESOItemData>;
   private
 
     procedure ParseSettingsTable(const aSettingsTable: ILuaTable);
     procedure ParseDataTable(const aDataTable: ILuaTable);
   public
-    property FileName: String read FFileName write FFileName;
+    property FileName: String read FSavedVariablesFileName write FSavedVariablesFileName;
     property Servers: TDictionary<String, TESOServer> read FServers;
     property Accounts: TDictionary<String, TIifaAccount> read FAccounts;
     property Characters: TDictionary<String, TIifaCharacter> read FCharacters;
@@ -76,7 +76,7 @@ begin
   FItems      := TESOItemDataHandler.Create();
 
   //Specify the standard SavedVariables filename
-  FFileName := IIFA_SV_FILENAME;
+  FSavedVariablesFileName := IIFA_SV_FILENAME;
 
   //Load the LUAWrapper library
   FLua := TLua.Create;
@@ -116,7 +116,7 @@ begin
   Result := False;
 
   if AFileName.IsEmpty then
-     lFile := FFileName
+     lFile := FSavedVariablesFileName
   else
      lFile := AFileName;
 
@@ -128,6 +128,7 @@ begin
     FAccounts.Clear;
   if Assigned(FCharacters) then
     FCharacters.Clear;
+
   //TODO:
   //->Error message: Pointer error!
   //if Assigned(FItems) then
@@ -148,7 +149,7 @@ begin
 
   // List of Accounts, containing the characters, exists now within fAccounts
   // IIFa_Settings->Accounts->Characters
-  // Move the accounts to TIIFAHelper.fAccounts and the characters to TIIfAHelper.fCharacters
+  // Move the characters of FAccounts to TIIfAHelper.fCharacters
     for lAccountExtractorPair in FAccounts do
     begin
       for lCharacterExtracted in lAccountExtractorPair.Value do
@@ -157,34 +158,12 @@ begin
       end;
     end;
 
-//    for lCharacterIdx := 0 to lAccountExtracted.Count -1 do
-//    begin
-//        //Add the unique CharacterId as key and the character object as value
-//        lCharacterExtracted := lAccountExtracted.ExtractAt( lCharacterIdx );
-//        FCharacters.Add( lCharacterExtracted.ID, lCharacterExtracted );
-//    end;
-
   //Get the global variable contents from lua routines: IIfA_Data (SavedVariables object containing the item information at each bag + character, server and account on server)
-//  lDataTable := FLua.GetGlobalVariable('IIfA_Data').AsTable;
-//  // Diese Methode füllt dann Server[], Items[] etc. und ordnet diese Items dann den Characters und Accounts zu
-//  ParseDataTable( lDataTable );
+  lDataTable := FLua.GetGlobalVariable('IIfA_Data').AsTable;
+  // Thos method will fill fServer[], fItems[] etc.
+  ParseDataTable( lDataTable );
 
-  // Durchsuchen von Servern und Prüfen ob vorhanden (nur Dictionary)
-//  if FServers.ContainsKey('serverPair.Key.ToString') then
-//     lServer := FServers.Items['serverPair.Key.ToString'];
-
-  // Durchsuchen von Accounts und Pürfen ob vorhanden
-//  for lAccount in FAccounts do
-//  begin
-//    if lAccount.DisplayName = "Wahtever" then
-//    begin
-//   end;
-//  end;
-
-  //Search Items via helper class TESOItemDataHandler
- // FItems.byLink['12345'].
-
-  FFileName := lFile;
+  FSavedVariablesFileName := lFile;
   Result := true;
 end;
 
@@ -238,13 +217,12 @@ procedure TIIFAHelper.ParseDataTable( const aDataTable: ILuaTable );
 var
   enum, enumAccounts, enumAccountWide, enumData, enumServer, enumDB, enumItems: ILuaTableEnumerator;
   pair, pairAccounts, pairAccountWide, pairData, pairServer, pairDB, pairItems: TLuaKeyValuePair;
+  lDisplayName: String;
   pairServerKeyStr: String;
   lTable: ILuaTable;
   lServer: TESOServer;
-  lServerIndex: byte;
   lAccount: TIifaAccount;
-  str: String;
-
+  lItemIdOrLink: String;
 begin
   // Wenn nicht nil, versuche den Inhalt zu verstehen
   if not Assigned(aDataTable) then
@@ -268,8 +246,10 @@ begin
       while enumAccounts.MoveNext do
       begin
         pairAccounts := enumAccounts.Current;
+        lDisplayName := pairAccounts.Key.AsString;
 
         // TODO: Check if the currenlty read account is in IIFAHelper.hAccounts, else skip to next entry
+        lAccount := nil;
 
         lTable := pairAccounts.Value.AsTable;
         enumAccountWide := lTable.GetEnumerator;
@@ -301,11 +281,14 @@ begin
                   pairServer := enumServer.Current;
                   pairServerKeyStr := pairServer.Key.AsString;
 
-                  //Get next entry and check if it is one of the server constants 'EU', 'NA', or 'PTS'
-                  if (pairServerKeyStr = SERVER_EU)
-                  or (pairServerKeyStr = SERVER_NA)
-                  or (pairServerKeyStr = SERVER_PTS) then
-                  begin
+                  //Get next entry and check if it is one of the existing servers
+                  if FServers.ContainsKey(pairServerKeyStr) then
+                    lServer := FServers.Items[pairServerKeyStr];
+
+                    //TODO:
+                    //Server "lServer" where the items are on is known, account "lAccount" of the characters of these items is also known
+                    //How to "connect" those now properly so one can search and see the dependencies?
+
                     lTable := pairServer.Value.AsTable;
                     enumDB := lTable.GetEnumerator;
 
@@ -323,14 +306,13 @@ begin
                           pairItems := enumItems.Current;
                           //lItem := TESOItem.Create( pairItems.Key.AsString );
                           //fItems.Add( lItem );
-                          str := pairItems.Key.AsString;
+                          lItemIdOrLink := pairItems.Key.AsString;
                         end;
 
                       end;
 
                     end;
 
-                  end;
                 end;
 
               end;

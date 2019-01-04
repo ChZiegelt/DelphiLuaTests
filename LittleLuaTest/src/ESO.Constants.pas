@@ -27,6 +27,7 @@ interface
     //----- Constants used in the in-game environment -----
     //-----------------------------------------------------
     //--BagIds--
+    (*
     BAG_WORN                  = 0;
     BAG_BACKPACK              = 1;
     BAG_BANK                  = 2;
@@ -48,7 +49,14 @@ interface
     //Iterators
     BAG_MIN_VALUE             = 0;
     BAG_MAX_VALUE             = 17;
+  *)
 
+   type
+    TESOBagIds = (BAG_WORN, BAG_BACKPACK, BAG_BANK, BAG_GUILDBANK, BAG_BUYBACK,
+                  BAG_VIRTUAL, BAG_SUBSCRIBER_BANK,
+                  BAG_HOUSE_BANK_ONE, BAG_HOUSE_BANK_TWO, BAG_HOUSE_BANK_THREE, BAG_HOUSE_BANK_FOUR, BAG_HOUSE_BANK_FIVE,
+                  BAG_HOUSE_BANK_SIX, BAG_HOUSE_BANK_SEVEN, BAG_HOUSE_BANK_EIGHT, BAG_HOUSE_BANK_NINE, BAG_HOUSE_BANK_TEN,
+                  BAG_DELETE);
 
 implementation
 end.
