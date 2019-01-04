@@ -1,5 +1,5 @@
 object Form1: TForm1
-  Left = 345
+  Left = 450
   Top = 210
   Caption = 'Form1'
   ClientHeight = 480
@@ -8,7 +8,7 @@ object Form1: TForm1
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
-  Left = 345
+  Left = 450
   Top = 210
   DesignerMasterStyle = 0
   object memo: TMemo

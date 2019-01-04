@@ -178,9 +178,9 @@ type
 
    public
     // Dictionaries für jede relevante zu suchende Eigenschaft
-    byName:  TDictionary< String,  TESOItemData >;
-    byID:    TDictionary< Integer, TESOItemData >;
-    byLink:  TDictionary< String,  TESOItemData >;
+    byName:       TDictionary< String,  TESOItemData >; //could be duplicate in the SavedVariables (on different servers!)
+    byItemLink:   TDictionary< String,  TESOItemData >; //could be duplicate in the SavedVariables (on different servers!)
+    byItemId:     TDictionary< Integer, TESOItemData >; //could be duplicate in the SavedVariables (on different servers!)
 
     procedure AddItem( const AItem: TESOItemData );
     procedure RemoveItem( const AItem: TESOItemData );
@@ -189,6 +189,10 @@ type
     function GetItemList(): TList< TESOItemData >;
     function toStrings(): TStrings;
 
+    function SearchByName( AName: String ): TList< TESOItemData >;
+    function SearchByItemLink( AItemLink: String ): TList< TESOItemData >;
+    function SearchByItemId( AItemId: Integer ): TList< TESOItemData >;
+    function SearchByFilterType( AFilterType: Integer ): TList< TESOItemData >;
     function SearchByQuality( AQuality: Integer ): TList< TESOItemData >;
 
     constructor Create();
@@ -301,26 +305,30 @@ end;
 
 procedure TESOItemDataHandler.Clear;
 begin
-  byName.Clear;
-  byId.Clear;
-  byLink.Clear;
-  List.Clear;
+  if Assigned(byName) then
+    byName.Clear;
+  if Assigned(byItemId) then
+    byItemId.Clear;
+  if Assigned(byItemLink) then
+    byItemLink.Clear;
+  if Assigned(List) then
+    List.Clear;
 end;
 
 constructor TESOItemDataHandler.Create;
 begin
   inherited Create;
-  byName  :=  TDictionary< String,  TESOItemData >.Create;
-  byID    :=  TDictionary< Integer, TESOItemData >.Create;
-  byLink  :=  TDictionary< String,  TESOItemData >.Create;
-  List    :=  TList< TESOItemData >.Create;
+  byName      :=  TDictionary< String,  TESOItemData >.Create;
+  byItemId    :=  TDictionary< Integer, TESOItemData >.Create;
+  byItemLink  :=  TDictionary< String,  TESOItemData >.Create;
+  List        :=  TList< TESOItemData >.Create;
 end;
 
 destructor TESOItemDataHandler.Destroy;
 begin
   FreeAndNil(byName);
-  FreeAndNil(byID);
-  FreeAndNil(byLink);
+  FreeAndNil(byItemId);
+  FreeAndNil(byItemLink);
   FreeAndNil(List);
 
   inherited Destroy;
@@ -336,19 +344,46 @@ end;
 procedure TESOItemDataHandler.RemoveItem(const AItem: TESOItemData);
 begin
   byName.Remove(AItem.Name);
-  byId.Remove(AItem.ItemId);
-  byLink.Remove(AItem.ItemLinkStr);
+  byItemId.Remove(AItem.ItemId);
+  byItemLink.Remove(AItem.ItemLinkStr);
   List.Remove(AItem);
 end;
 
 procedure TESOItemDataHandler.AddItem(const AItem: TESOItemData);
 begin
   byName.AddOrSetValue(AItem.Name, AItem);
-  byId.AddOrSetValue(AItem.ItemId, AItem);
-  byLink.AddOrSetValue(AItem.ItemLinkStr, AItem);
+  byItemId.AddOrSetValue(AItem.ItemId, AItem);
+  byItemLink.AddOrSetValue(AItem.ItemLinkStr, AItem);
   List.Add( AItem );
 end;
 
+function TESOItemDataHandler.SearchByName(AName: String): TList<TESOItemData>;
+begin
+
+end;
+
+function TESOItemDataHandler.SearchByItemLink(AItemLink: String): TList<TESOItemData>;
+begin
+
+end;
+
+function TESOItemDataHandler.SearchByItemId(AItemId: Integer): TList<TESOItemData>;
+begin
+
+end;
+
+
+function TESOItemDataHandler.SearchByFilterType(AFilterType: Integer): TList<TESOItemData>;
+var
+  lESOItemData: TESOItemData;
+  lResult: TList<TESOItemData>;
+begin
+  lResult := TList<TESOItemData>.Create;
+  for lESOItemData in List do
+    if lESOItemData.FilterType = AFilterType then
+      lResult.Add(lESOItemData);
+  result := lResult;
+end;
 
 function TESOItemDataHandler.SearchByQuality(AQuality: Integer): TList<TESOItemData>;
 var

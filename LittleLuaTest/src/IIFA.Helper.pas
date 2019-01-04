@@ -33,7 +33,7 @@ type
     FServers:     TDictionary<String, TESOServer>;
     FAccounts:    TDictionary<String, TIIfAAccount>;
     FCharacters:  TDictionary<String, TIIfACharacter>;
-    FItems:       TESOItemDataHandler;//TLIst<TESOItemData>;
+    FItems:       TESOItemDataHandler;//TList<TESOItemData>;
   private
 
     procedure ParseSettingsTable(const aSettingsTable: ILuaTable);
@@ -104,13 +104,10 @@ var
   lFile: String;
 
   lDataTable, lSettingsTable: ILuaTable;
-  enum: ILuaTableEnumerator;
-  pair: TLuaKeyValuePair;
-
+  
   lAccountExtractorPair: TPair<string, TIIfAAccount>;
   lCharacterExtracted: TESOCharacter;
   lLuaCodeHelperList: TStringList;
-  lAccountIdx, lCharacterIdx: Integer;
 
 begin
   Result := False;
@@ -129,10 +126,9 @@ begin
   if Assigned(FCharacters) then
     FCharacters.Clear;
 
-  //TODO:
-  //->Error message: Pointer error!
+  //TODO:  //->Error message: Pointer error! If assigned(Fitems)
   //if Assigned(FItems) then
-    //FItems.Clear;
+  //FItems.Clear;
 
   //Load the contents of the IIfA.lua SavedVariables file
   //LoadFromFile is not able to use UTF8 conversion properly!
@@ -167,7 +163,8 @@ begin
   Result := true;
 end;
 
-
+//Called from TIIFAHelper.ParseFile,
+// the settings table will be parsed now to get the accounts + their characters
 procedure TIIFAHelper.ParseSettingsTable(const aSettingsTable: ILuaTable);
 var
   enum, enumAccounts: ILuaTableEnumerator;
@@ -177,7 +174,6 @@ var
   lTable: ILuaTable;
 
   lAccount: TIifaAccount;
-
 begin
   // Wenn nicht nil, versuche den Inhalt zu verstehen
   if not Assigned(aSettingsTable) then
@@ -291,6 +287,7 @@ begin
                     lTable := pairServer.Value.AsTable;
                     enumDB := lTable.GetEnumerator;
 
+
                     while enumDB.MoveNext do
                     begin
                       pairDB := enumDB.Current;
@@ -319,6 +316,14 @@ begin
                             //Read the locations of the item
                             if sPairItemKeyStr = ENTRY_LOCATIONS then
                             begin
+
+                              //Read the subtables and get character Id, CraftBag, Bank, Guildbankname
+
+                                //Read the subtable and get the bagSlot with more data below
+                                  //Read the subtable and get the itemId = itemCount entry
+
+                                //Read the subtable and get the bagId
+
 
                             end
                             else

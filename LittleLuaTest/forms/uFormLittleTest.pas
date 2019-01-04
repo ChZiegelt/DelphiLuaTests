@@ -59,6 +59,8 @@ implementation
 
 
 {$R *.fmx}
+{$R *.Surface.fmx MSWINDOWS}
+{$R *.Windows.fmx MSWINDOWS}
 
 procedure TForm1.AfterConstruction;
 begin
