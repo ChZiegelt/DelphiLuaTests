@@ -90,7 +90,7 @@ begin
 
   // Ausgeben:
   // AccountName
-  //   Charaktername, CharakterId, Einstellung GildenBankLesen
+  //   Charaktername, CharakterId, Einstellung GildenBankLesen, Gold und andere Vermögen
   memo.Lines.Clear;
   for lAccount in IifaHelper.Accounts.Values do
   begin
@@ -100,14 +100,12 @@ begin
   end;
 
   //Items
-  (*
   lItemList := IifaHelper.Items.GetItemList();
   if Assigned(lItemList)  then
     for lItem in lItemList do
     begin
       memo.Lines.Add( lItem.toString() );
     end;
-*)
 
 end;
 

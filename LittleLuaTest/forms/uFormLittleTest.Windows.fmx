@@ -1,7 +1,7 @@
 inherited Form1_Windows: TForm1_Windows
   DesignerMasterStyle = 0
   inherited memo: TMemo
-    Viewport.Width = 630.000000000000000000
+    Viewport.Width = 947.000000000000000000
     Viewport.Height = 435.000000000000000000
   end
 end

@@ -260,10 +260,8 @@ end;
 
 function TESOItemData.toString: String;
 begin
-  Result := Format( '> ID: %s', [String(ItemId)]);
-
-//  Result := Format( '> ID: %s, Name: %s, Quality:  %s, FilterType: %s, ItemLink: %s' ,
-//                      [String(ItemId), Name , Quality, FilterType, ItemLinkStr]);
+  Result := Format( '> ID: %s, Name: %s, Quality:  %s, FilterType: %s, ItemLink: %s' ,
+                      [ItemId.ToString, Name, Quality.ToString, FilterType.ToString, ItemLinkStr]);
 end;
 
 { TESOItemLink }
