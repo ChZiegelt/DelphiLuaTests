@@ -11,6 +11,7 @@ interface
   , System.Generics.Collections
 
   ;
+ {$ENDREGION}
 
 
   //General constants of the addon Inventory Insight from Ashes (IIfA)
@@ -54,7 +55,8 @@ interface
     ENTRY_LOCATIONS               = 'locations';
     ENTRY_BAG_BANK                = 'Bank';
     ENTRY_BAG_VIRTUAL             = 'CraftBag';
-    ENTRY_BAG_GUILDBANK_SUFFIX    = '-guildBanks'; // ServerType SERVER_* + suffix, e.g. "EU-guildBanks"
+    ENTRY_BAG_GUILDBANK_DELIMITER = '-';
+    ENTRY_BAG_GUILDBANK_SUFFIX    = ENTRY_BAG_GUILDBANK_DELIMITER + 'guildBanks'; // ServerType SERVER_* + suffix, e.g. "EU-guildBanks"
     //Where is the item located in detail (abg, slotIndex)?
     ENTRY_BAGID                   = 'bagID';
     ENTRY_SLOTINDEX               = 'bagSlot';
@@ -75,6 +77,10 @@ interface
     ITEM_INFO_FILTERTYPE          = 'filterType';
     ITEM_INFO_QUALITY             = 'itemQuality';
 
+    //---defining the guild bank information
+    GUILDBANK_ITEMCOUNT           = 'items';
+    GUILDBANK_WAS_COLLECTED       = 'bCollectData';
+    GUILDBANK_LAST_COLLECTED      = 'lastCollected';
 
 implementation
 end.

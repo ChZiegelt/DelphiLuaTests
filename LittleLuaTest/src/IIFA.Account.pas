@@ -19,6 +19,7 @@ uses
   , IIFA.Character
 
   ;
+ {$ENDREGION}
 
 type
   // Class for read accounts from IIFA.lua SavedVariables file

@@ -12,9 +12,11 @@ uses
   , System.Generics.Collections
   , Lua
 
+  // ESO
   , ESO.Character
 
   ;
+ {$ENDREGION}
 
 type
   TESOAccountName = String;

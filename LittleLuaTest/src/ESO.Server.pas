@@ -16,6 +16,8 @@ uses
   , ESO.Account
 
   ;
+ {$ENDREGION}
+
 
 type
   TESOServer = class
@@ -23,9 +25,6 @@ type
     FName:           String;
     FIP:             String;
     FOnlineCheckURL: String;
-
-    //Referenced
-    RAccount: TESOAccount;
 
   public
     property Name: String read FName write FName;

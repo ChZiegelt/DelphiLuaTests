@@ -12,8 +12,8 @@ interface
     , Lua
 
     , ESO.Constants
-
-    ;
+   ;
+ {$ENDREGION}
 
 type
   TESOBagSpace = record

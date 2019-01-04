@@ -16,8 +16,9 @@ uses
   , ESO.ItemData
 
   // IIFA
-  , IIFA.Helper
   , IIFA.Account
+  , IIFA.GuildBank
+  , IIFA.Helper
 
   // Zum Formular gehörend
   , System.Variants
@@ -81,14 +82,18 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 var
-  lAccount: TIifaAccount;
+  lAccount: TIIfAAccount;
   lItem:    TESOItemData;
   lItemList:  TList<TESOItemData>;
+  lGuildBank: TIIfAGuildBank;
   lStrings: TStrings;
 begin
   IifaHelper.ParseFile();
 
-  // Ausgeben:
+  ////////////////////
+  //    OUTPUT      //
+  ////////////////////
+
   // AccountName
   //   Charaktername, CharakterId, Einstellung GildenBankLesen, Gold und andere Vermögen
   memo.Lines.Clear;
@@ -99,7 +104,16 @@ begin
     FreeAndNil(lStrings);
   end;
 
+  //Guild Banks
+  memo.Lines.Add('');
+  for lGuildBank in IifaHelper.GuildBanks.Values do
+  begin
+    memo.Lines.Add( lGuildBank.toString() );
+  end;
+
   //Items
+  memo.Lines.Add('');
+  memo.Lines.Add('[ITEMs]');
   lItemList := IifaHelper.Items.GetItemList();
   if Assigned(lItemList)  then
     for lItem in lItemList do

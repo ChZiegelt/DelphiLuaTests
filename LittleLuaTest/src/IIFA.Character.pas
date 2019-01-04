@@ -15,6 +15,7 @@ uses
   , ESO.Bag
   , ESO.Character
   ;
+ {$ENDREGION}
 
 type
 
@@ -36,12 +37,9 @@ implementation
 
 function TIIfACharacter.toString: String;
 begin
-  Result := Format('   Id: %s, Name: %s, CollectGuildBankData: %s, AP: %s, WV: %s, TV: %s, Gold: %s',
-                      //space: %s/%s',
-                    [Id, Name, FSetting_CollectGuildBankData.ToString,
-                    Asset_ap.ToString, Asset_wv.ToString, Asset_tv.ToString, Asset_gold.ToString
-                    //String(Asset_bagSpace.used), String(Asset_bagSpace.max)]
-  ]);
+  Result := Format('   Id: %s, Name: %s, CollectGuildBankData: %s, AP: %s, WV: %s, TV: %s, Gold: %s, space: %s/%s',
+                       [Id, Name, FSetting_CollectGuildBankData.ToString, Asset_ap.ToString, Asset_wv.ToString, Asset_tv.ToString, Asset_gold.ToString, Asset_bagSpace.used.ToString, Asset_bagSpace.max.ToString]
+  );
 end;
 
 

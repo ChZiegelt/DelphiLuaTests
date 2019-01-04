@@ -15,6 +15,8 @@ uses
   , ESO.bag
 
   ;
+ {$ENDREGION}
+
 
   type
 

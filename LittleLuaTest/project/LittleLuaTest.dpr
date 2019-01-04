@@ -15,7 +15,9 @@ uses
   ESO.Account in '..\src\ESO.Account.pas',
   ESO.Bag in '..\src\ESO.Bag.pas',
   Lua.API in '..\DelphiLua\Lua.API.pas',
-  Lua in '..\DelphiLua\Lua.pas';
+  Lua in '..\DelphiLua\Lua.pas',
+  ESO.Bank in '..\src\ESO.Bank.pas',
+  ESO.GuildBank in '..\src\ESO.GuildBank.pas';
 
 {$R *.res}
 

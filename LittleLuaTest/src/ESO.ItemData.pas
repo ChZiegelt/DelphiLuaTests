@@ -12,15 +12,15 @@ uses
   , System.Generics.Collections
   , Lua
 
+  // ESO
   , ESO.Constants
   , ESO.Account
+  , ESO.Bag
+  , ESO.Bank
   , ESO.Character
   , ESO.Server
-  , ESO.Bag
 
-  , IIFA.Constants
-  , IIFA.Character
-
+ {$ENDREGION}
   ;
 
 type
@@ -134,7 +134,10 @@ type
     FItemLink: TESOItemLink;
 
     //References for lookup
+    RAccount:     TESOAccount;
+    RCharacter:   TESOCharacter;
     RServer:      TESOServer;
+    RBank:        TESOBank;
   private
 
     //procedure setItemLink(const Value: String);
@@ -161,7 +164,11 @@ type
     property ItemId: Integer read getItemId; // write FItemId;
     property ItemLinkStr: String read getItemLinkString write setItemLinkString;
 
+    property Account: TESOAccount read RAccount write RAccount;
+    property Character: TESOCharacter read RCharacter write RCharacter;
     property Server: TESOServer read RServer write RServer;
+    property Bank: TESOBank read RBank write RBank;
+
 
     function toString(): String; override;
 

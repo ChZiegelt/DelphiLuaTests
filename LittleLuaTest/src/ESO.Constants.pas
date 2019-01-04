@@ -11,9 +11,10 @@ interface
   , System.Generics.Collections
 
   ;
+ {$ENDREGION}
 
 
-  //General constants of the addon Inventory Insight from Ashes (IIfA)
+  //General constants of the Game Elder Scrolls Online
   const
     //-----------------------------------------------------
     //----- Constants used in the game environment -----
@@ -23,9 +24,9 @@ interface
     SERVER_PTS_IP             = '???.???.???.???';
     SERVER_ANNOUNCEMENTS_URL  = 'https://help.elderscrollsonline.com/app/answers/detail/a_id/4320'; // get HTML result and read below "ESO SERVICE ALERTS" at the current date to check if servers are online
 
-    //-----------------------------------------------------
-    //----- Constants used in the in-game environment -----
-    //-----------------------------------------------------
+    //Guild banks
+    ESO_GUILDBANK_MAX_ITEMCOUNT = 500;
+
     //--BagIds--
     (*
     BAG_WORN                  = 0;
