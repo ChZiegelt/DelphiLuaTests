@@ -100,12 +100,14 @@ begin
   end;
 
   //Items
+  (*
   lItemList := IifaHelper.Items.GetItemList();
   if Assigned(lItemList)  then
     for lItem in lItemList do
     begin
       memo.Lines.Add( lItem.toString() );
     end;
+*)
 
 end;
 

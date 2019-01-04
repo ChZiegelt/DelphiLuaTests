@@ -15,6 +15,7 @@ uses
   , ESO.Constants
   , ESO.Server
   , ESO.Character
+  , ESO.Bag
   , ESO.ItemData
 
   , IIFA.Constants
@@ -211,13 +212,16 @@ end;
 // the data table will be parsed now to get the items
 procedure TIIFAHelper.ParseDataTable( const aDataTable: ILuaTable );
 var
-  enum, enumAccounts, enumAccountWide, enumData, enumServer, enumDB, enumItems, enumItemData: ILuaTableEnumerator;
-  pair, pairAccounts, pairAccountWide, pairData, pairServer, pairDB, pairItems, pairItemData: TLuaKeyValuePair;
-  lDisplayName, pairServerKeyStr, lItemIdOrLink, sPairItemKeyStr, sPairItemValueStr: String;
+  enum, enumAccounts, enumAccountWide, enumData, enumAssets, enumAssetsData, enumServer, enumDB, enumItems, enumItemData: ILuaTableEnumerator;
+  pair, pairAccounts, pairAccountWide, pairData, pairAssets, pairAssetsData, pairServer, pairDB, pairItems, pairItemData: TLuaKeyValuePair;
+  sDisplayName, spairServerKeyStr, sAssetCharacterId, sAssetDataStr, sItemIdOrLink, sPairItemKeyStr, sPairItemValueStr: String;
   lTable: ILuaTable;
   lServer: TESOServer;
-  lAccount: TIifaAccount;
+  lAccount: TIIfAAccount;
+  lCharacter: TIIfACharacter;
   lItem: TESOItemData;
+  lBagSpace: TESOBagSpace;
+  iBagSpaceChecked: byte;
 begin
   // Wenn nicht nil, versuche den Inhalt zu verstehen
   if not Assigned(aDataTable) then
@@ -241,7 +245,7 @@ begin
       while enumAccounts.MoveNext do
       begin
         pairAccounts := enumAccounts.Current;
-        lDisplayName := pairAccounts.Key.AsString;
+        sDisplayName := pairAccounts.Key.AsString;
 
         // TODO: Check if the currenlty read account is in IIFAHelper.hAccounts, else skip to next entry
         lAccount := nil;
@@ -274,12 +278,12 @@ begin
                 while enumServer.MoveNext do
                 begin
                   pairServer := enumServer.Current;
-                  pairServerKeyStr := pairServer.Key.AsString;
+                  spairServerKeyStr := pairServer.Key.AsString;
 
                   //Get next entry and check if it is one of the existing servers
-                  if FServers.ContainsKey(pairServerKeyStr) then
+                  if FServers.ContainsKey(spairServerKeyStr) then
                   begin
-                    lServer := FServers.Items[pairServerKeyStr];
+                    lServer := FServers.Items[spairServerKeyStr];
 
                     { TODO :
                     Server "lServer" is known, account "lAccount" is also known. items need to be parsed and then stored with their bagId, slotindex (if given) and the other TESOItemData fields
@@ -300,10 +304,10 @@ begin
                         while enumItems.MoveNext do
                         begin
                           pairItems := enumItems.Current;
-                          lItemIdOrLink := pairItems.Key.AsString;
+                          sItemIdOrLink := pairItems.Key.AsString;
 
                           //Create an item
-                          lItem := TESOItemData.Create( lItemIdOrLink );
+                          lItem := TESOItemData.Create( sItemIdOrLink );
 
                           //Iterate over the other itemData and add the found information to the item
                           lTable := pairItems.Value.AsTable;
@@ -366,15 +370,90 @@ begin
                       end;
 
                     end;
+                  end
+
+                  //Entry in data was no server, so check for other entries
+                  else
+                  begin
+
+                    //Entry is the "assets" of each character?
+                    if spairServerKeyStr = ENTRY_ASSETS then
+                    begin
+
+                      lTable := pairServer.Value.AsTable;
+                      enumAssets := lTable.GetEnumerator;
+
+                      while enumAssets.MoveNext do
+                      begin
+                        pairAssets := enumAssets.Current;
+                        sAssetCharacterId := pairAssets.Key.AsString;
+
+                        //Check if character is in Accounts->Characters
+                        if Characters.ContainsKey(sAssetCharacterId) then
+                        begin
+                          //Yes: Add the assets to this character
+                          lTable := pairAssets.Value.AsTable;
+                          enumAssetsData := lTable.GetEnumerator;
+
+                          //Get the character
+                          lCharacter := Characters[sAssetCharacterId];
+                          if Assigned(lCharacter) then
+                          begin
+
+                            iBagSpaceChecked := 0;
+
+                            while enumAssetsData.MoveNext do
+                            begin
+                              pairAssetsData := enumAssetsData.Current;
+                              sAssetDataStr := pairAssetsData.Key.AsString;
+
+                              if sAssetDataStr = ASSETS_ALLIANCE_POINTS then
+                                lCharacter.Asset_ap := pairAssetsData.Value.AsInteger
+                              else if sAssetDataStr = ASSETS_WRIT_VOUCHERS then
+                                lCharacter.Asset_wv := pairAssetsData.Value.AsInteger
+                              else if sAssetDataStr = ASSETS_GOLD then
+                                lCharacter.Asset_gold := pairAssetsData.Value.AsInteger
+                              else if sAssetDataStr = ASSETS_TEL_VAR_STONES then
+                                lCharacter.Asset_tv := pairAssetsData.Value.AsInteger
+                              else if sAssetDataStr = ASSETS_SPACE_MAX then
+                              begin
+                                lBagSpace.max := pairAssetsData.Value.AsInteger;
+                                inc(iBagSpaceChecked);
+                              end
+                              else if sAssetDataStr = ASSETS_SPACE_USED then
+                              begin
+                                lBagSpace.used := pairAssetsData.Value.AsInteger;
+                                inc(iBagSpaceChecked);
+                              end;
+                              if iBagSpaceChecked >= 2 then
+                                lCharacter.Asset_bagSpace := lBagSpace;
+                            end;
+
+                          end;
+
+                        end;
+
+                      end;
+
+                    end; // if spairServerKeyStr = ENTRY_ASSETS then
+
                   end;
+
                 end;
 
-              end;
+              end       // DATA in $AccountWide
+              else
+              begin
+                //Other entries in $AccountWide
 
-            end
+                //Check for guild banks
+
+              end;      //Other entries in $AccountWide
+
+            end;
 
           end;
-        end
+        end;
       end;
     end;
   end;

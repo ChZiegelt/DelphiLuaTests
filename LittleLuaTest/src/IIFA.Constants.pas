@@ -50,6 +50,7 @@ interface
     IIFA_SV_DB_VERSION            = 'DBv3'; //2019-01-02
 
     //---defining the item locations
+    ENTRY_ASSETS                  = 'assets';
     ENTRY_LOCATIONS               = 'locations';
     ENTRY_BAG_BANK                = 'Bank';
     ENTRY_BAG_VIRTUAL             = 'CraftBag';
@@ -57,6 +58,14 @@ interface
     //Where is the item located in detail (abg, slotIndex)?
     ENTRY_BAGID                   = 'bagID';
     ENTRY_SLOTINDEX               = 'bagSlot';
+
+    //---definining the assets information
+    ASSETS_ALLIANCE_POINTS        = 'ap';
+    ASSETS_WRIT_VOUCHERS          = 'wv';
+    ASSETS_GOLD                   = 'gold';
+    ASSETS_TEL_VAR_STONES         = 'tv';
+    ASSETS_SPACE_MAX              = 'spaceMax';
+    ASSETS_SPACE_USED             = 'spaceUsed';
 
     //---definining the item information
     ITEM_INFO_ITEMLINK            = 'itemLink';

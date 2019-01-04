@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 210
   Caption = 'Form1'
   ClientHeight = 480
-  ClientWidth = 640
+  ClientWidth = 957
   Position = Designed
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -19,11 +19,11 @@ object Form1: TForm1
     Margins.Top = 40.000000000000000000
     Margins.Right = 5.000000000000000000
     Margins.Bottom = 5.000000000000000000
-    Size.Width = 630.000000000000000000
+    Size.Width = 947.000000000000000000
     Size.Height = 435.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1
-    Viewport.Width = 626.000000000000000000
+    Viewport.Width = 943.000000000000000000
     Viewport.Height = 431.000000000000000000
   end
   object Button2: TButton

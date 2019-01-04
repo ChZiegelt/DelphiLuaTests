@@ -1,15 +1,15 @@
 IIfA_Settings =
 {
-    ["Default"] = 
+    ["Default"] =
     {
-        ["@TestAcc"] = 
+        ["@TestAcc"] =
         {
             ["8798292046222099"] =
             {
             	["$LastCharacterName"] = "TestChar",
 			},
 		},
-		["@Baertram"] = 
+		["@Baertram"] =
         {
             ["8798292046222073"] =
             {
@@ -1402,19 +1402,19 @@ IIfA_Settings =
 }
 IIfA_Data =
 {
-    ["Default"] = 
+    ["Default"] =
     {
-        ["@Baertram"] = 
+        ["@Baertram"] =
         {
-            ["$AccountWide"] = 
+            ["$AccountWide"] =
             {
-                ["Data"] = 
+                ["Data"] =
                 {
                     ["showItemStats"] = false,
                     ["TextColorsCraftBag"] = "3399ff",
                     ["lastLang"] = "de",
                     ["in2DefaultInventoryFrameView"] = "Bank and Current Character",
-                    ["BagSpaceWarn"] = 
+                    ["BagSpaceWarn"] =
                     {
                         ["g"] = 0.5098039216,
                         ["threshold"] = 85,
@@ -1422,7 +1422,7 @@ IIfA_Data =
                         ["b"] = 0,
                     },
                     ["TextColorsBank"] = "3399ff",
-                    ["assets"] = 
+                    ["assets"] =
                     {
                         ["8798292046222073"] = 
                         {
@@ -1442,7 +1442,7 @@ IIfA_Data =
                             ["spaceUsed"] = 60,
                             ["tv"] = 0,
                         },
-                        ["8798292071144958"] = 
+                        ["8798292071144958"] =
                         {
                             ["ap"] = 1500,
                             ["wv"] = 0,
@@ -1524,13 +1524,13 @@ IIfA_Data =
                             ["tv"] = 0,
                         },
                     },
-                    ["NA"] = 
+                    ["NA"] =
                     {
-                        ["DBv3"] = 
+                        ["DBv3"] =
                         {
-                            ["|H1:item:138825:175:1:0:0:0:0:0:0:0:0:0:0:0:0:2:0:0:0:10000:0|h|h"] = 
+                            ["|H1:item:138825:175:1:0:0:0:0:0:0:0:0:0:0:0:0:2:0:0:0:10000:0|h|h"] =
                             {
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["8796093052231733"] = 
                                     {
@@ -1547,7 +1547,7 @@ IIfA_Data =
                             },
                             ["|H1:item:138827:175:1:0:0:0:0:0:0:0:0:0:0:0:0:2:0:0:0:10000:0|h|h"] = 
                             {
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["8796093052231733"] = 
                                     {
@@ -1564,7 +1564,7 @@ IIfA_Data =
                             },
                             ["|H1:item:138826:175:1:0:0:0:0:0:0:0:0:0:0:0:0:2:0:0:0:10000:0|h|h"] = 
                             {
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["8796093052231733"] = 
                                     {
@@ -1581,7 +1581,7 @@ IIfA_Data =
                             },
                             ["|H1:item:64711:123:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h"] = 
                             {
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["8796093052231733"] = 
                                     {
@@ -1802,7 +1802,7 @@ IIfA_Data =
                             ["lastX"] = 400,
                             ["hidden"] = true,
                         },
-                        ["store"] = 
+                        ["store"] =
                         {
                             ["width"] = 380,
                             ["minimized"] = false,
@@ -1813,7 +1813,7 @@ IIfA_Data =
                             ["lastX"] = 400,
                             ["hidden"] = true,
                         },
-                        ["stables"] = 
+                        ["stables"] =
                         {
                             ["width"] = 380,
                             ["minimized"] = false,
@@ -1824,7 +1824,7 @@ IIfA_Data =
                             ["lastX"] = 400,
                             ["hidden"] = true,
                         },
-                        ["WishListScene"] = 
+                        ["WishListScene"] =
                         {
                             ["width"] = 450,
                             ["minimized"] = false,
@@ -1838,16 +1838,16 @@ IIfA_Data =
                     },
                     ["TextColorsHouseChest"] = "3399ff",
                     ["bInSeparateFrame"] = false,
-                    ["EU"] = 
+                    ["EU"] =
                     {
-                        ["DBv3"] = 
+                        ["DBv3"] =
                         {
                             ["|H1:item:75062:363:50:0:0:0:0:0:0:0:0:0:0:0:256:11:0:0:0:0:0|h|h"] = 
                             {
                                 ["itemInstanceOrUniqueId"] = 1610739959,
                                 ["itemName"] = "Halskette des Schattentänzers^f",
                                 ["filterType"] = 23,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["FCO"] = 
                                     {
@@ -1860,13 +1860,13 @@ IIfA_Data =
                                 },
                                 ["itemQuality"] = 4,
                             },
-                            ["46137"] = 
+                            ["46137"] =
                             {
                                 ["filterType"] = 4,
                                 ["itemName"] = "Prachtleder^ns",
                                 ["itemLink"] = "|H1:item:46137:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["itemQuality"] = 1,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["CraftBag"] = 
                                     {
@@ -1883,7 +1883,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 57985834,
                                 ["itemName"] = "elegante Schuhe^p",
                                 ["filterType"] = 2,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["FCO"] = 
                                     {
@@ -1902,7 +1902,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 2736267795,
                                 ["itemName"] = "Stromschlag-Kürass^m",
                                 ["filterType"] = 2,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["FCO"] = 
                                     {
@@ -1920,7 +1920,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 1371302973,
                                 ["itemName"] = "Schoner des Meisterschützen^p",
                                 ["filterType"] = 2,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["Finis Coronat Opus"] = 
                                     {
@@ -1938,7 +1938,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 3660963239,
                                 ["itemName"] = "Kürass des Ausgestoßenen^m",
                                 ["filterType"] = 2,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["FCO"] = 
                                     {
@@ -1957,7 +1957,7 @@ IIfA_Data =
                                 ["itemName"] = "Korund^ms",
                                 ["itemLink"] = "|H1:item:33256:0:0:0:0:0:0:0:0:0:0:0:0:0:0:5:0:0:0:0:0|h|h",
                                 ["itemQuality"] = 1,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["CraftBag"] = 
                                     {
@@ -1974,7 +1974,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 3371966401,
                                 ["itemName"] = "Ektoplasma^n",
                                 ["filterType"] = 5,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["8798292067641350"] = 
                                     {
@@ -2000,7 +2000,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 4159904437,
                                 ["itemName"] = "elegantes Schwert^n",
                                 ["filterType"] = 1,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["FCO"] = 
                                     {
@@ -2015,7 +2015,7 @@ IIfA_Data =
                             },
                             ["|H1:item:51718:369:50:54484:369:50:0:0:0:0:0:0:0:0:1:19:1:1:0:85:0|h|h"] = 
                             {
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["Bank"] = 
                                     {
@@ -2036,7 +2036,7 @@ IIfA_Data =
                                 ["itemName"] = "unbearbeiteter Ahorn^ms",
                                 ["itemLink"] = "|H1:item:802:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["itemQuality"] = 1,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["CraftBag"] = 
                                     {
@@ -2050,7 +2050,7 @@ IIfA_Data =
                             },
                             ["|H1:item:64571:123:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h"] = 
                             {
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["Bank"] = 
                                     {
@@ -2071,7 +2071,7 @@ IIfA_Data =
                                 ["itemName"] = "Denata^N",
                                 ["itemLink"] = "|H1:item:45852:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["itemQuality"] = 3,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["CraftBag"] = 
                                     {
@@ -2085,7 +2085,7 @@ IIfA_Data =
                             },
                             ["|H1:item:43680:4:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h"] = 
                             {
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["Bank"] = 
                                     {
@@ -2102,7 +2102,7 @@ IIfA_Data =
                             },
                             ["|H1:item:74293:362:50:0:0:0:0:0:0:0:0:0:0:0:1:41:0:1:0:218:0|h|h"] = 
                             {
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["Bank"] = 
                                     {
@@ -2123,7 +2123,7 @@ IIfA_Data =
                                 ["itemName"] = "Adamant^n",
                                 ["itemLink"] = "|H1:item:33252:0:0:0:0:0:0:0:0:0:0:0:0:0:0:7:0:0:0:0:0|h|h",
                                 ["itemQuality"] = 1,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["CraftBag"] = 
                                     {
@@ -2141,7 +2141,7 @@ IIfA_Data =
                                 ["itemName"] = "Formel: dunkelelfische Laterne, Öl^f:f",
                                 ["itemQuality"] = 2,
                                 ["itemLink"] = "|H1:item:116026:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["8798292065306120"] = 
                                     {
@@ -2159,7 +2159,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 938123492,
                                 ["itemName"] = "Schulterschutz des Donnerkäfers^m",
                                 ["filterType"] = 2,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["FCO"] = 
                                     {
@@ -2174,7 +2174,7 @@ IIfA_Data =
                             },
                             ["|H1:item:110928:363:50:0:0:0:0:0:0:0:0:0:0:0:1:30:0:1:0:10000:0|h|h"] = 
                             {
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["Bank"] = 
                                     {
@@ -2196,7 +2196,7 @@ IIfA_Data =
                                 ["itemName"] = "Deni^N",
                                 ["itemLink"] = "|H1:item:45833:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["itemQuality"] = 1,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["CraftBag"] = 
                                     {
@@ -2213,9 +2213,9 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 2721730123,
                                 ["itemName"] = "Gemälde des Herbsts, Nieten^n",
                                 ["filterType"] = 21,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -2231,7 +2231,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 326770755,
                                 ["itemName"] = "Panzer^m",
                                 ["filterType"] = 5,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["8798292067641350"] = 
                                     {
@@ -2266,7 +2266,7 @@ IIfA_Data =
                                 ["itemName"] = "Ebenerz^n",
                                 ["itemLink"] = "|H1:item:23105:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["itemQuality"] = 1,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["CraftBag"] = 
                                     {
@@ -2284,7 +2284,7 @@ IIfA_Data =
                                 ["itemName"] = "Platinunze^f",
                                 ["itemLink"] = "|H1:item:135146:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["itemQuality"] = 1,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["CraftBag"] = 
                                     {
@@ -2301,7 +2301,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 2319716259,
                                 ["itemName"] = "Trank der Waffenkraft^m",
                                 ["filterType"] = 3,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["Finis Coronat Opus"] = 
                                     {
@@ -2319,7 +2319,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 3832219713,
                                 ["itemName"] = "Schild des Schänders^m",
                                 ["filterType"] = 2,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["Finis Coronat Opus"] = 
                                     {
@@ -2337,7 +2337,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 2103199400,
                                 ["itemName"] = "Glashammer^md",
                                 ["filterType"] = 5,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["8798292056471902"] = 
                                     {
@@ -2355,7 +2355,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 3838212417,
                                 ["itemName"] = "Essenz der Waffenkraft^f",
                                 ["filterType"] = 3,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["8798292046222073"] = 
                                     {
@@ -2405,7 +2405,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 3756339,
                                 ["itemName"] = "Ring des Bienenhüters^m",
                                 ["filterType"] = 23,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["FCO"] = 
                                     {
@@ -2421,7 +2421,7 @@ IIfA_Data =
                             },
                             ["|H1:item:99648:363:50:45884:369:50:0:0:0:0:0:0:0:0:257:8:0:1:0:0:0|h|h"] = 
                             {
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["Bank"] = 
                                     {
@@ -2441,7 +2441,7 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 340568481,
                                 ["itemName"] = "Handschuhe der Muttertränen^p",
                                 ["filterType"] = 2,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["8798292056471902"] = 
                                     {
@@ -2456,7 +2456,7 @@ IIfA_Data =
                             },
                             ["|H1:item:103736:363:50:0:0:0:0:0:0:0:0:0:0:0:257:2:0:1:0:0:0|h|h"] = 
                             {
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["Bank"] = 
                                     {
@@ -2477,7 +2477,7 @@ IIfA_Data =
                                 ["itemName"] = "Fackelkäferpanzer^m",
                                 ["itemLink"] = "|H1:item:77581:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["itemQuality"] = 2,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["CraftBag"] = 
                                     {
@@ -2491,7 +2491,7 @@ IIfA_Data =
                             },
                             ["|H1:item:94828:363:50:0:0:0:0:0:0:0:0:0:0:0:1:67:0:1:0:10000:0|h|h"] = 
                             {
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["Bank"] = 
                                     {
@@ -2512,7 +2512,7 @@ IIfA_Data =
                                 ["itemName"] = "Argentum^ns",
                                 ["itemLink"] = "|H1:item:46150:0:0:0:0:0:0:0:0:0:0:0:0:0:0:19:0:0:0:0:0|h|h",
                                 ["itemQuality"] = 1,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
                                     ["CraftBag"] = 
                                     {
@@ -2530,9 +2530,9 @@ IIfA_Data =
                                 ["itemName"] = "Rezept: Alabaster-Honigrum^n:ms",
                                 ["itemQuality"] = 2,
                                 ["itemLink"] = "|H1:item:57062:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
-                                ["locations"] = 
+                                ["locations"] =
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -2695,7 +2695,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82031:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -2715,7 +2715,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:87692:4:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -2742,7 +2742,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 1,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -2841,7 +2841,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -3004,7 +3004,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:87693:4:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -3102,7 +3102,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:87682:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -3320,7 +3320,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57000:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -3651,7 +3651,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 3,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -3670,7 +3670,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:140456:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -4042,7 +4042,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68195:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -4374,7 +4374,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57006:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -4411,7 +4411,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:87683:4:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -4519,7 +4519,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:56999:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -4893,7 +4893,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68222:4:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -5054,7 +5054,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -5505,7 +5505,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:119404:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -5807,7 +5807,7 @@ IIfA_Data =
                                 ["filterType"] = 21,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -5895,7 +5895,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -6057,7 +6057,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:87694:5:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -6137,7 +6137,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:16425:4:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -6899,7 +6899,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57071:4:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -7241,7 +7241,7 @@ IIfA_Data =
                                 ["filterType"] = 5,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -7339,7 +7339,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 3,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -7366,7 +7366,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 3,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -8020,7 +8020,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82032:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -8128,7 +8128,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68214:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -8362,7 +8362,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:116027:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -8567,7 +8567,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -8753,7 +8753,7 @@ IIfA_Data =
                                 ["filterType"] = 5,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -8877,7 +8877,7 @@ IIfA_Data =
                                 ["filterType"] = 2,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -8948,7 +8948,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68213:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -9200,7 +9200,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:45919:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -9585,7 +9585,7 @@ IIfA_Data =
                                 ["filterType"] = 2,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -9729,7 +9729,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68192:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -9980,7 +9980,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:16428:4:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -10089,7 +10089,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68194:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -10161,7 +10161,7 @@ IIfA_Data =
                                 ["filterType"] = 2,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -10692,7 +10692,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:140454:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -10766,7 +10766,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82023:5:33:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -11315,7 +11315,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:27245:4:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -11368,7 +11368,7 @@ IIfA_Data =
                                 ["filterType"] = 5,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -11727,7 +11727,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57003:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -11745,7 +11745,7 @@ IIfA_Data =
                                 ["filterType"] = 21,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -11975,7 +11975,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68200:4:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -12491,7 +12491,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57067:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -12935,7 +12935,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 3,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -12972,7 +12972,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:87688:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -13932,7 +13932,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82030:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -14543,7 +14543,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68191:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -15223,7 +15223,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:126862:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -15268,7 +15268,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 3,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -15500,7 +15500,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -15608,7 +15608,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -15628,7 +15628,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68198:4:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -16017,7 +16017,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68215:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -16116,7 +16116,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68211:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -16313,7 +16313,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:119392:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -16332,7 +16332,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68189:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -16521,7 +16521,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82028:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -16930,7 +16930,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -17131,7 +17131,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:16426:4:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -17609,7 +17609,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -18012,7 +18012,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57004:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -18136,7 +18136,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -18903,7 +18903,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:56998:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -19146,7 +19146,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 1,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -19663,7 +19663,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 1,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -19908,7 +19908,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -20143,7 +20143,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:140445:5:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -20164,7 +20164,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:116019:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -20346,7 +20346,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82033:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -20724,7 +20724,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57069:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -20867,7 +20867,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -21020,7 +21020,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 3,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -21234,7 +21234,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68193:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -21325,7 +21325,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:16424:4:50:0:0:0:0:0:0:0:0:0:0:0:0:7:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -21361,7 +21361,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -21676,7 +21676,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 3,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -21695,7 +21695,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68204:4:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -21714,7 +21714,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57002:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -21776,7 +21776,7 @@ IIfA_Data =
                                 ["filterType"] = 2,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -21812,7 +21812,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -21971,7 +21971,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82034:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -22239,7 +22239,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57075:4:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -22258,7 +22258,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:119379:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -22277,7 +22277,7 @@ IIfA_Data =
                                 ["filterType"] = 5,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -22565,7 +22565,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57015:4:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -22794,7 +22794,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:140452:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -23230,7 +23230,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82035:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -23521,7 +23521,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:140446:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -24078,7 +24078,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:116088:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -24391,7 +24391,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82029:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -24448,7 +24448,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:140450:5:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -24656,7 +24656,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57064:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -25247,7 +25247,7 @@ IIfA_Data =
                                 ["filterType"] = 2,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -26157,7 +26157,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57001:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -26282,7 +26282,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -26336,7 +26336,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68190:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -26453,7 +26453,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:119016:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -26721,7 +26721,7 @@ IIfA_Data =
                                 ["filterType"] = 2,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -26791,7 +26791,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:126844:4:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -27006,7 +27006,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57068:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -27087,7 +27087,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:140455:5:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -27231,7 +27231,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:140447:5:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -27288,7 +27288,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68218:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -27414,7 +27414,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:27244:4:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -27450,7 +27450,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -27486,7 +27486,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:116012:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -28147,7 +28147,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -28219,7 +28219,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:140457:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -28344,7 +28344,7 @@ IIfA_Data =
                                 ["filterType"] = 2,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -28697,7 +28697,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57066:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -29414,7 +29414,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 3,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -29751,7 +29751,7 @@ IIfA_Data =
                                 ["filterType"] = 5,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -30472,7 +30472,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:116017:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -30491,7 +30491,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68212:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -30669,7 +30669,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82026:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -30936,7 +30936,7 @@ IIfA_Data =
                                 ["filterType"] = 5,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -31326,7 +31326,7 @@ IIfA_Data =
                                 ["filterType"] = 5,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -31478,7 +31478,7 @@ IIfA_Data =
                                 ["filterType"] = 2,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -31533,7 +31533,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57070:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -31588,7 +31588,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:140451:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -31829,7 +31829,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57065:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -32025,7 +32025,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68228:4:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -32086,7 +32086,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 2,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -32321,7 +32321,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57079:4:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -32844,7 +32844,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82027:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -33481,7 +33481,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:119405:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -33908,7 +33908,7 @@ IIfA_Data =
                                 ["filterType"] = 2,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -33926,7 +33926,7 @@ IIfA_Data =
                                 ["filterType"] = 5,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -34025,7 +34025,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 3,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -34082,7 +34082,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -34304,7 +34304,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:87689:4:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -34394,7 +34394,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82024:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -34448,7 +34448,7 @@ IIfA_Data =
                                 ["filterType"] = 5,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -35121,7 +35121,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:82036:5:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -35366,7 +35366,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:119375:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -36675,7 +36675,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68219:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -37086,7 +37086,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:126836:4:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -37105,7 +37105,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57063:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -37373,7 +37373,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68197:3:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -37644,7 +37644,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:115932:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -38165,7 +38165,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 2,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -38204,7 +38204,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:57005:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -38340,7 +38340,7 @@ IIfA_Data =
                                 ["filterType"] = 3,
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -38368,7 +38368,7 @@ IIfA_Data =
                                         },
                                         ["bagID"] = 3,
                                     },
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -38861,7 +38861,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:68217:3:50:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -38935,7 +38935,7 @@ IIfA_Data =
                                 ["itemLink"] = "|H1:item:4487:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h",
                                 ["locations"] = 
                                 {
-                                    ["Noble Blood"] = 
+                                    ["Noble Blood"] =
                                     {
                                         ["bagSlot"] = 
                                         {
@@ -38977,11 +38977,11 @@ IIfA_Data =
                                 ["itemInstanceOrUniqueId"] = 3874852078,
                                 ["itemName"] = "Hentzen von Bahrahas Fluch^p",
                                 ["filterType"] = 2,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
-                                    ["FCO"] = 
+                                    ["FCO"] =
                                     {
-                                        ["bagSlot"] = 
+                                        ["bagSlot"] =
                                         {
                                             [3128] = 1,
                                         },
@@ -38990,16 +38990,16 @@ IIfA_Data =
                                 },
                                 ["itemQuality"] = 3,
                             },
-                            ["|H1:item:71779:4:1:0:0:0:0:0:0:0:0:0:0:0:17:0:0:1:1:0:0|h|h"] = 
+                            ["|H1:item:71779:4:1:0:0:0:0:0:0:0:0:0:0:0:17:0:0:1:1:0:0|h|h"] =
                             {
                                 ["itemInstanceOrUniqueId"] = 283073263,
                                 ["itemName"] = "gefälschter Begnadigungserlass^m",
                                 ["filterType"] = 3,
-                                ["locations"] = 
+                                ["locations"] =
                                 {
-                                    ["8798292046222073"] = 
+                                    ["8798292046222073"] =
                                     {
-                                        ["bagSlot"] = 
+                                        ["bagSlot"] =
                                         {
                                             [128] = 1,
                                         },
@@ -39008,23 +39008,23 @@ IIfA_Data =
                                 },
                                 ["itemQuality"] = 3,
                             },
-                        },
-                    },
-                    ["ignoredCharEquipment"] = 
+                        }, -- ["DBv3"]
+                    }, -- ["EU"]
+                    ["ignoredChaßrEquipment"] =
                     {
                     },
                     ["bConvertedLocType"] = true,
                     ["version"] = 1,
                     ["b_collectHouses"] = false,
                     ["dontFocusSearch"] = false,
-                    ["BagSpaceAlert"] = 
+                    ["BagSpaceAlert"] =
                     {
                         ["g"] = 1,
                         ["threshold"] = 95,
                         ["r"] = 1,
                         ["b"] = 0,
                     },
-                    ["houseChestSpace"] = 
+                    ["houseChestSpace"] =
                     {
                     },
                     ["saveSettingsGlobally"] = true,
@@ -39036,14 +39036,14 @@ IIfA_Data =
                     ["showItemCountOnRight"] = true,
                     ["in2TooltipsFontSize"] = 16,
                     ["ShowToolTipWhen"] = "Always",
-                    ["BagSpaceFull"] = 
+                    ["BagSpaceFull"] =
                     {
                         ["b"] = 0,
                         ["r"] = 1,
                         ["g"] = 0,
                     },
                     ["TextColorsToon"] = "3399ff",
-                    ["fontList"] = 
+                    ["fontList"] =
                     {
                         [100025] = 
                         {
@@ -39189,9 +39189,9 @@ IIfA_Data =
                         },
                     },
                     ["bConvertedGlyphs"] = true,
-                    ["EU-guildBanks"] = 
+                    ["EU-guildBanks"] =
                     {
-                        ["Noble Blood"] = 
+                        ["Noble Blood"] =
                         {
                             ["bCollectData"] = true,
                             ["items"] = 0,
@@ -39221,9 +39221,9 @@ IIfA_Data =
                             ["items"] = 0,
                             ["lastCollected"] = "20170102@150337",
                         },
-                    },
-                },
-            },
-        },
-    },
+                    }, -- EU-guildBanks
+                }, -- Data
+            }, -- ["$AccountWide"] =
+        }, -- Account @.....
+    }, -- ["Default"] =
 }
