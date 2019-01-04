@@ -128,7 +128,9 @@ var
 begin
   IifaHelper.ParseFile();
 
-  // Ausgeben
+  // Ausgeben:
+  // AccountName
+  //   Charaktername, CharakterId, Einstellung GildenBankLesen
   memo.Lines.Clear;
   for lAccount in IifaHelper.Accounts.Values do
   begin

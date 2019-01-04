@@ -26,8 +26,26 @@ uses
   public
     property Name:  String read FName write FName;
     property ID:    TESOCharacterId read FID write FID;
+
+    constructor Create( const AName: String = ''; const AID: TESOCharacterId = '' );
+    destructor  Destroy();
   end;
 
 implementation
+
+{ TESOCharacter }
+
+constructor TESOCharacter.Create(const AName: String = ''; const AID: TESOCharacterId = '');
+begin
+  inherited Create;
+
+  FName := AName;
+  FID   := AID;
+end;
+
+destructor TESOCharacter.Destroy;
+begin
+  inherited Destroy;
+end;
 
 end.

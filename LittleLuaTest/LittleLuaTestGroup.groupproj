@@ -3,9 +3,6 @@
         <ProjectGuid>{D14FCDC3-A2EC-483B-8B5E-33A1A99C2D9A}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="..\..\Wrapper\delphilua\UnitTests\DelphiLuaUnitTests.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="project\LittleLuaTest.dproj">
             <Dependencies/>
         </Projects>
@@ -17,15 +14,6 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="DelphiLuaUnitTests">
-        <MSBuild Projects="..\..\Wrapper\delphilua\UnitTests\DelphiLuaUnitTests.dproj"/>
-    </Target>
-    <Target Name="DelphiLuaUnitTests:Clean">
-        <MSBuild Projects="..\..\Wrapper\delphilua\UnitTests\DelphiLuaUnitTests.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="DelphiLuaUnitTests:Make">
-        <MSBuild Projects="..\..\Wrapper\delphilua\UnitTests\DelphiLuaUnitTests.dproj" Targets="Make"/>
-    </Target>
     <Target Name="LittleLuaTest">
         <MSBuild Projects="project\LittleLuaTest.dproj"/>
     </Target>
@@ -36,13 +24,13 @@
         <MSBuild Projects="project\LittleLuaTest.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="DelphiLuaUnitTests;LittleLuaTest"/>
+        <CallTarget Targets="LittleLuaTest"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="DelphiLuaUnitTests:Clean;LittleLuaTest:Clean"/>
+        <CallTarget Targets="LittleLuaTest:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="DelphiLuaUnitTests:Make;LittleLuaTest:Make"/>
+        <CallTarget Targets="LittleLuaTest:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

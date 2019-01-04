@@ -28,7 +28,8 @@ type
     //Override this function to parse the lua table with account data for the character data
     procedure ParseCharacters(const AAccount: ILuaTable); virtual; abstract;
 
-    constructor Create( const ADisplayName: String );
+    constructor Create( const ADisplayName: String = '');
+    destructor Destroy();
   end;
 
 
@@ -37,11 +38,16 @@ implementation
 
 { TESOAccount }
 
-constructor TESOAccount.Create(const ADisplayName: String);
+constructor TESOAccount.Create(const ADisplayName: String = '');
 begin
   inherited Create;
 
   FDisplayName := ADisplayName;
+end;
+
+destructor TESOAccount.Destroy;
+begin
+  inherited Destroy;
 end;
 
 end.

@@ -108,7 +108,7 @@ var
   pair: TLuaKeyValuePair;
 
   lAccountExtractorPair: TPair<string, TIIfAAccount>;
-  lCharacterExtracted: TIIfACharacter;
+  lCharacterExtracted: TESOCharacter;
   lLuaCodeHelperList: TStringList;
   lAccountIdx, lCharacterIdx: Integer;
 
@@ -154,7 +154,7 @@ begin
     begin
       for lCharacterExtracted in lAccountExtractorPair.Value do
       begin
-        FCharacters.Add(lCharacterExtracted.ID , lCharacterExtracted);
+        FCharacters.Add(lCharacterExtracted.ID , TIIfACharacter(lCharacterExtracted));
       end;
     end;
 

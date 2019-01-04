@@ -64,8 +64,7 @@ begin
   begin
     pair := enumCharacter.Current;
 
-    lCharacter := TIifaCharacter.Create;
-    lCharacter.ID := pair.Key.AsString;
+    lCharacter := TIifaCharacter.Create('', pair.Key.AsString);
 
     lTable := pair.Value.AsTable;
     enumSettings := lTable.GetEnumerator;
@@ -89,6 +88,7 @@ end;
 
 function TIIfAAccount.toStrings: TStrings;
 var
+//  lCharacter: TIIfACharacter;
   lCharacter: TESOCharacter;
 begin
   Result := TStringList.Create;
@@ -97,7 +97,7 @@ begin
 
   for lCharacter in Self do
   begin
-    Result.Add( lCharacter.toString() );
+    Result.Add( TIIfACharacter(lCharacter).toString() );
   end;
 end;
 
