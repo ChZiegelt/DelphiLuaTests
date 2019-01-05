@@ -17,29 +17,38 @@ uses
   ;
  {$ENDREGION}
 
-  type
+type
 
   //IIfA guild bank class
   TIIfAGuildBank = class (TESOGuildBank)
   strict private
+    FWasCollected: Boolean;
+    FLastCollected: TDateTime;
 
   public
-    function toString(): String; override;
+    property WasCollected: Boolean read FWasCollected write FWasCollected;
+    property LastCollected: TDateTime read FLastCollected write FLastCollected;
 
+    function toString(): String; override;
   end;
 
 implementation
 
 { TIIfAGuildBank }
 
-{ TIIfAGuildBank }
 
 function TIIfAGuildBank.toString: String;
+   var
+      sWasCollected: String;
 begin
-  Result := Format('Guildbank Server: %s, name: %s, itemCount: %s',
-                    [Server.Name, Name, Asset_bagSpace.used.ToString]
-  );
+  if WasCollected then
+   sWasCollected := 'True'
+  else
+   sWasCollected := 'False';
 
+  Result := Format('Guildbank Server: %s, name: %s, itemCount: %s, wasCollected: %s, lastCollected: %s',
+                    [Server.Name, Name, Asset_bagSpace.used.ToString, sWasCollected, DateTimeToStr(LastCollected)]
+  );
 end;
 
 end.

@@ -39189,6 +39189,21 @@ IIfA_Data =
                         },
                     },
                     ["bConvertedGlyphs"] = true,
+                    ["NA-guildBanks"] =
+                    {
+                        ["Test Guildbank1"] =
+                        {
+                            ["bCollectData"] = true,
+                            ["items"] = 500,
+                            ["lastCollected"] = "20181101@190801",
+                        },
+                        ["Test Guildbank 2"] =
+                        {
+                            ["bCollectData"] = true,
+                            ["items"] = 232,
+                            ["lastCollected"] = "20181230@175435",
+                        },
+					},
                     ["EU-guildBanks"] =
                     {
                         ["Noble Blood"] =
@@ -39197,29 +39212,29 @@ IIfA_Data =
                             ["items"] = 0,
                             ["lastCollected"] = "20181101@190801",
                         },
-                        ["FCO"] = 
+                        ["FCO"] =
                         {
                             ["bCollectData"] = true,
                             ["items"] = 450,
                             ["lastCollected"] = "20181230@175435",
                         },
-                        ["Imperial Trading Company"] = 
+                        ["Imperial Trading Company"] =
                         {
                             ["bCollectData"] = false,
                             ["items"] = 0,
                             ["lastCollected"] = "20170102@150337",
                         },
-                        ["Finis Coronat Opus"] = 
+                        ["Finis Coronat Opus"] =
                         {
                             ["bCollectData"] = true,
                             ["items"] = 158,
                             ["lastCollected"] = "20181230@175439",
                         },
-                        ["Fair Trade Society"] = 
+                        ["Fair Trade Society"] =
                         {
                             ["bCollectData"] = false,
                             ["items"] = 0,
-                            ["lastCollected"] = "20170102@150337",
+                            ["lastCollected"] = "00000000@000000",
                         },
                     }, -- EU-guildBanks
                 }, -- Data

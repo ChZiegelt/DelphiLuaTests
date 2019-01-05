@@ -8,6 +8,7 @@ uses
   , System.Types
   , System.UITypes
   , System.Classes
+  , System.Variants
 
   , StrUtils
   , System.Generics.Collections
@@ -225,7 +226,7 @@ procedure TIIFAHelper.ParseDataTable( const aDataTable: ILuaTable );
 var
   enum, enumAccounts, enumAccountWide, enumData, enumAssets, enumAssetsData, enumServer, enumGuildBanks, enumGuildBanksData, enumDB, enumItems, enumItemData: ILuaTableEnumerator;
   pair, pairAccounts, pairAccountWide, pairData, pairAssets, pairAssetsData, pairServer, pairGuildBanks, pairGuildBanksData, pairDB, pairItems, pairItemData: TLuaKeyValuePair;
-  sDisplayName, sPairServerKeyStr, sAssetCharacterId, sAssetDataStr, sItemIdOrLink, sPairItemKeyStr, sPairItemValueStr, sServerNameForGuildBank, sGuildBankStr: String;
+  sDisplayName, sPairServerKeyStr, sAssetCharacterId, sAssetDataStr, sItemIdOrLink, sPairItemKeyStr, sPairItemValueStr, sServerNameForGuildBank, sGuildBankStr, sGuildBankLastCollected: String;
   lTable: ILuaTable;
   lServer, lServerGuildBank: TESOServer;
   lAccount: TIIfAAccount;
@@ -235,10 +236,21 @@ var
   lBagSpace: TESOBagSpace;
   iBagSpaceChecked: byte;
   iServerNameForGuildBankLength: integer;
+  myDateTime: TDateTime;
+  //myFs: TFormatSettings;
+  arDateTime: TArray<String>;
 begin
   // Wenn nicht nil, versuche den Inhalt zu verstehen
   if not Assigned(aDataTable) then
      exit;
+  //Format the DateTime
+(*
+  with myFs do begin
+    myFs.DateSeparator := '.';
+    myFs.ShortDateFormat := 'dd.mm.yyyy';
+    myFs.LongDateFormat  := 'dd.mm.yyyy hh:mm:ss';
+  end;
+*)
 
   // Parse tables below IIfA_Data
   enum := aDataTable.GetEnumerator;
@@ -461,12 +473,38 @@ begin
                                 lGuildBank.Asset_bagSpace := lBagSpace;
                               end
                               else if sGuildBankStr = GUILDBANK_WAS_COLLECTED then
-                                //lGuildBank.WasCollected := pairGuildBanksData.Value.AsInteger;
+                                lGuildBank.WasCollected := pairGuildBanksData.Value.AsBoolean
                               else if sGuildBankStr = GUILDBANK_LAST_COLLECTED then
                               begin
                                 //Get the date and time from pairGuildBanksData.Value.AsString
                                 //and then add it to the guildbank.LastCollected attribute
-                                //lGuildBank.LastCollected := pairGuildBanksData.Value.AsString;
+                                sGuildBankLastCollected := pairGuildBanksData.Value.AsString;
+                                if not String.IsNullOrEmpty(sGuildBankLastCollected) then
+                                begin
+                                  //Split the string of the SV last collected info (e.g. "20181101@190801") into date and time parts
+                                  arDateTime := sGuildBankLastCollected.Split(['@']);
+                                  if Length(arDateTime) = 2 then
+                                  begin
+                                    //Date "20181101" is now in arDateTime[0]
+                                    sGuildBankLastCollected := '';
+                                    sGuildBankLastCollected := arDateTime[0].Substring(6, 2); //Day
+                                    sGuildBankLastCollected := sGuildBankLastCollected + '.';
+                                    sGuildBankLastCollected := sGuildBankLastCollected + arDateTime[0].Substring(4, 2); //Month
+                                    sGuildBankLastCollected := sGuildBankLastCollected + '.';
+                                    sGuildBankLastCollected := sGuildBankLastCollected + arDateTime[0].Substring(0, 4); //Year
+                                    //Time "190801" is now in arDateTime[1]
+                                    sGuildBankLastCollected := sGuildBankLastCollected + ' ' + arDateTime[1].Substring(0, 2); //Hours
+                                    sGuildBankLastCollected := sGuildBankLastCollected + ':';
+                                    sGuildBankLastCollected := sGuildBankLastCollected + arDateTime[1].Substring(2, 2); //Minutes
+                                    sGuildBankLastCollected := sGuildBankLastCollected + ':';
+                                    sGuildBankLastCollected := sGuildBankLastCollected + arDateTime[1].Substring(4, 2); //Seconds
+                                    try
+                                      myDateTime := VarToDateTime(sGuildBankLastCollected);
+                                      lGuildBank.LastCollected := myDateTime;
+                                    except
+                                    end;
+                                  end;
+                                end;
                               end;
                             end;
                             //Add the found guild bank to the IIfAHelper.GuildBanks
