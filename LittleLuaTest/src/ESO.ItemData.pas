@@ -20,6 +20,9 @@ uses
   , ESO.Character
   , ESO.Server
 
+  // IIfA
+  , IIfA.GuildBank
+
  {$ENDREGION}
   ;
 
@@ -113,16 +116,16 @@ type
     property ItemId: Integer read FItemId;  // write FItemId;
     property ItemLink: String read FItemLink write setItemLink;
 
-    constructor Create(const AItemLink: String = '');
+    constructor Create(const AItemLink: String = ''; bIsESOItemLink: Boolean = True);
   end;
 
 
  // Klasse für Gegenstände aus LUA Dateien
   TESOItemData= class
   strict private
-    FBagId: TESOBag;
+    FBagId: TESOBagIds;
     FSlotIndex: Integer;
-    FSlotCount: Integer;
+    FStackCount: Integer;
     //FItemId: Integer;
     FFilterType: Integer;
     FQuality: Integer;
@@ -146,9 +149,9 @@ type
     procedure setItemLinkString(const Value: String);
 
   public
-    property BagId: TESOBag read FBagId write FBagId;
+    property BagId: TESOBagIds read FBagId write FBagId;
     property SlotIndex: Integer read FSlotIndex write FSlotIndex;
-    property SlotCount: Integer read FSlotCount write FSlotCount;
+    property StackCount: Integer read FStackCount write FStackCount;
 
     property FilterType: Integer read FFilterType write FFilterType;
     property Quality: Integer read FQuality write FQuality;
@@ -229,7 +232,7 @@ end;
 
 constructor TESOItemData.Create(const AItemLink: String = '');
 begin
-  FItemLink := TESOItemLink.Create(AItemLink);
+  FItemLink := TESOItemLink.Create(AItemLink, AItemLink.Contains(ESO_ITEMLINK_PREFIX))
 end;
 
 destructor TESOItemData.Destroy;
@@ -266,21 +269,36 @@ end;
 
 
 function TESOItemData.toString: String;
+  var
+    sLocation: String;
 begin
-  Result := Format( '> ID: %s, Name: %s, Quality:  %s, FilterType: %s, ItemLink: %s' ,
-                      [ItemId.ToString, Name, Quality.ToString, FilterType.ToString, ItemLinkStr]);
+  if BagId = BAG_WORN then
+    sLocation := 'Worn: "' + Character.Name + '"'
+  else if BagId = BAG_BACKPACK then
+    sLocation := 'Inventory "' + Character.Name + '"'
+  else if BagId = BAG_BANK then
+    sLocation := 'Bank'
+  else if BagId = BAG_SUBSCRIBER_BANK then
+    sLocation := 'ESO+ Bank'
+  else if BagId = BAG_VIRTUAL then
+    sLocation := 'Craftbag'
+  else if BagId = BAG_GUILDBANK then
+    sLocation := 'Guildbank "' + TIIfAGuildBank(Bank).Name + '"';
+
+  Result := Format( '> ID: %s, Name: %s, Quality:  %s, FilterType: %s, ItemLink: %s, Location: %s, SlotIndex: %s, StackCount: %s' ,
+                      [ItemId.ToString, Name, Quality.ToString, FilterType.ToString, ItemLinkStr, sLocation, SlotIndex.ToString, StackCount.ToString]);
 end;
 
 { TESOItemLink }
 
-constructor TEsoItemLink.Create(const AItemLink: String);
+constructor TEsoItemLink.Create(const AItemLink: String = ''; bIsESOItemLink: Boolean = True);
 begin
   inherited Create;
 
   if AItemLink = '' then exit;
 
   //Check if the itemLink is really a link, or an itemId (from CraftBag entry e.g.)
-  if AItemLink.IndexOf(':') = -1  then
+  if (not bIsESOItemLink) or not AItemLink.Contains(ESO_ITEMLINK_PREFIX) then
   begin
     //It's no itemlink but maybe an itemId? Check if the value in ItemLink is only an integer value
     if IsInteger(AItemLink) then

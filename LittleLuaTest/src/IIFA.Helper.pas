@@ -10,16 +10,20 @@ uses
   , System.Classes
   , System.Variants
 
+  , FMX.Dialogs
   , StrUtils
   , System.Generics.Collections
   , Lua
 
   //ESO
   , ESO.Bag
+  , ESO.Bank
   , ESO.Character
   , ESO.Constants
+  , ESO.HouseBank
   , ESO.ItemData
   , ESO.Server
+  , ESO.SubscriberBank
 
   //IIfA
   , IIFA.Constants
@@ -41,7 +45,11 @@ type
     FAccounts:    TDictionary<String, TIIfAAccount>;
     FCharacters:  TDictionary<String, TIIfACharacter>;
 
+    FBanks:       TDictionary<TESOBagIds, TESOBank>;
+    FHouseBanks:  TDictionary<TESOBagIds, TESOHouseBank>;
     FGuildBanks:  TDictionary<String, TIIfAGuildBank>;
+
+    //FCraftBag:    TESOBag;
 
     FItems:       TESOItemDataHandler;//TList<TESOItemData>;
   private
@@ -56,6 +64,11 @@ type
     property Characters: TDictionary<String, TIifaCharacter> read FCharacters;
     property GuildBanks: TDictionary<String, TIIfAGuildBank> read FGuildBanks;
 
+    property Banks: TDictionary<TESOBagIds, TESOBank> read FBanks write FBanks;
+    property HouseBanks: TDictionary<TESOBagIds, TESOHouseBank> read FHouseBanks write FHouseBanks;
+
+    //property CraftBag: TESOBag read FCraftBag write FCraftBag;
+
     property Items: TESOItemDataHandler read FItems;
 
     procedure AfterConstruction; override;
@@ -65,9 +78,21 @@ type
   end;
 
 
-
-
 implementation
+
+
+{ Helper functions }
+function IsInteger(value : String): Boolean;
+begin
+  try
+    value.ToInteger();
+  except
+    Result := false;
+    exit;
+  end;
+  Result:=true;
+end;
+
 
 
 { TIIFAHelper }
@@ -87,6 +112,8 @@ begin
   FAccounts   := TDictionary<String, TIIfAAccount>.Create();
   FCharacters := TDictionary<String, TIIfACharacter>.Create();
   FGuildBanks := TDictionary<String, TIIfAGuildBank>.Create();
+  FBanks      := TDictionary<TESOBagIds, TESOBank>.Create();
+  FHouseBanks := TDictionary<TESOBagIds, TESOHouseBank>.Create();
   FItems      := TESOItemDataHandler.Create();
 
   //Specify the standard SavedVariables filename
@@ -103,8 +130,13 @@ procedure TIIFAHelper.BeforeDestruction;
 begin
   FreeAndNil( FAccounts );
   FreeAndNil( FCharacters );
-  FreeAndNil( FServers );
   FreeAndNil( FGuildBanks );
+
+  FreeAndNil( FBanks );
+  FreeAndNil( FHouseBanks );
+
+  FreeAndNil( FServers );
+
   FreeAndNil( FItems );
 
   FreeAndNil( FLua );
@@ -135,15 +167,19 @@ begin
   if not FileExists(lFile) then
      exit(False);
 
-  //Clear the old entries in Accounts, characters, items here now
+  //Clear the old entries in Accounts, characters, banks, items here now
   if Assigned(FAccounts) then
     FAccounts.Clear;
   if Assigned(FCharacters) then
     FCharacters.Clear;
-
-  //TODO:  //->Error message: Pointer error! If assigned(Fitems)
-  //if Assigned(FItems) then
-  //FItems.Clear;
+  if Assigned(FBanks) then
+    FBanks.Clear;
+  if Assigned(FHouseBanks) then
+    FHouseBanks.Clear;
+  if Assigned(FGuildBanks) then
+    FGuildBanks.Clear;
+  if Assigned(FItems) then
+    FItems.Clear;
 
   //Load the contents of the IIfA.lua SavedVariables file
   //LoadFromFile is not able to use UTF8 conversion properly!
@@ -224,18 +260,20 @@ end;
 // the data table will be parsed now to get the items
 procedure TIIFAHelper.ParseDataTable( const aDataTable: ILuaTable );
 var
-  enum, enumAccounts, enumAccountWide, enumData, enumAssets, enumAssetsData, enumServer, enumGuildBanks, enumGuildBanksData, enumDB, enumItems, enumItemData: ILuaTableEnumerator;
-  pair, pairAccounts, pairAccountWide, pairData, pairAssets, pairAssetsData, pairServer, pairGuildBanks, pairGuildBanksData, pairDB, pairItems, pairItemData: TLuaKeyValuePair;
-  sDisplayName, sPairServerKeyStr, sAssetCharacterId, sAssetDataStr, sItemIdOrLink, sPairItemKeyStr, sPairItemValueStr, sServerNameForGuildBank, sGuildBankStr, sGuildBankLastCollected: String;
+  enum, enumAccounts, enumAccountWide, enumData, enumAssets, enumAssetsData, enumServer, enumGuildBanks, enumGuildBanksData, enumDB, enumItems, enumItemData, enumItemLocation, enumItemLocationData, enumItemLocationDataSub: ILuaTableEnumerator;
+  pair, pairAccounts, pairAccountWide, pairData, pairAssets, pairAssetsData, pairServer, pairGuildBanks, pairGuildBanksData, pairDB, pairItems, pairItemData, pairItemLocation, pairItemLocationData, pairItemLocationDataSub: TLuaKeyValuePair;
+  sDisplayName, sPairServerKeyStr, sAssetCharacterId, sAssetDataStr, sItemIdOrLink, sPairItemKeyStr, sPairItemValueStr, sServerNameForGuildBank, sGuildBankStr, sGuildBankLastCollected, sItemLocationStr, sItemLocationDataStr: String;
   lTable: ILuaTable;
   lServer, lServerGuildBank: TESOServer;
   lAccount: TIIfAAccount;
   lCharacter: TIIfACharacter;
   lGuildBank: TIIfAGuildBank;
   lItem: TESOItemData;
+  lBank: TESOBank;
+  lHouseBank: TESOHouseBank;
   lBagSpace: TESOBagSpace;
   iBagSpaceChecked: byte;
-  iServerNameForGuildBankLength: integer;
+  iServerNameForGuildBankLength, iBagId: integer;
   myDateTime: TDateTime;
   //myFs: TFormatSettings;
   arDateTime: TArray<String>;
@@ -334,11 +372,92 @@ begin
                             //Read the locations of the item
                             if sPairItemKeyStr = ENTRY_LOCATIONS then
                             begin
-                              // TODO: Read the subtables and get character Id, CraftBag, Bank, Guildbankname
-                                //Read the subtable and get the bagId
-                                //Read the subtable and get the bagSlot with more data below
-                                  //Read the subtable and get the itemId = itemCount entry
+                              //Read the subtables and get character Id, CraftBag, Bank, Guildbank Name or houseBank collection Id
+                              lTable := pairItemData.Value.AsTable;
+                              enumItemLocation := lTable.GetEnumerator;
+                              while enumItemLocation.MoveNext do
+                              begin
+                                pairItemLocation := enumItemLocation.Current;
+                                sItemLocationStr := pairItemLocation.Key.AsString; //Contains location like an Integer HouseBank collectionId, Strings like "CraftBag", "Bank", or a character Id
+                                //Read the subtable and get the bagID or get the bagSlot with more data below
+                                lTable := pairItemLocation.Value.AsTable;
+                                enumItemLocationData := lTable.GetEnumerator;
+                                while enumItemLocationData.MoveNext do
+                                begin
+                                  pairItemLocationData := enumItemLocationData.Current;
+                                  sItemLocationDataStr := pairItemLocationData.Key.AsString; //Contains bagSlot, bagID
+////////////////////////////////////////////////////////////////////////////////
+                                  //Check the bagId and update it in the item
+                                  if sItemLocationDataStr = ENTRY_BAGID then
+                                  begin
+                                    iBagId := pairItemLocationData.Value.AsInteger;
+
+                                    if sItemLocationStr = ENTRY_BAG_BANK then
+                                    begin
+                                      //BagId is BAG_BANK or BAG_SUBSCRIBER_BANK
+                                      lItem.BagId := TESOBagIds(iBagId);
+                                    end;
+                                    if sItemLocationStr = ENTRY_BAG_VIRTUAL then
+                                      lItem.BagId := BAG_VIRTUAL
+                                    else
+                                    begin
+                                      //Is the entry a numeric value only and a character Id?
+                                      if Characters.ContainsKey(sItemLocationStr) then
+                                      begin
+                                        //BagId is BAG_WORN or BAG_BACKPACK
+                                        lItem.BagId := TESOBagIds(iBagId);
+                                        //Get the character and reference it to the item
+                                        lCharacter := Characters[sItemLocationStr];
+                                        if Assigned(lCharacter) then
+                                          lItem.Character := lCharacter;
+                                      end
+                                      //Is the entry a guild bank name?
+                                      else if GuildBanks.ContainsKey(sItemLocationStr) then
+                                      begin
+                                        lItem.BagId := BAG_GUILDBANK;
+                                        //Get the guildbank and reference it to the item
+                                        lGuildBank := GuildBanks[sItemLocationStr];
+                                        if Assigned(lGuildBank) then
+                                          lItem.Bank := lGuildBank;
+                                      end
+                                      //Is the key an integer value, then it might be a house bank bag
+                                      else if IsInteger(sItemLocationStr) then
+                                      begin
+                                        lItem.BagId := TESOBagIds(iBagId);
+                                        // Create the house bank if not yet created
+                                        if HouseBanks.ContainsKey(TESOBagIds(iBagId)) then
+                                          lHouseBank := HouseBanks[TESOBagIds(iBagId)]
+                                        else
+                                        begin
+                                          //Create the housebank here and assign it to IIfA.HouseBanks
+                                          lHouseBank := TESOHouseBank.Create('', TESOBagIds(iBagId));
+                                          if Assigned (lBank) then
+                                            HouseBanks.Add(TESOBagIds(iBagId), lHouseBank);
+                                        end;
+                                      end
+
+                                    end
+                                  end
+////////////////////////////////////////////////////////////////////////////////
+                                  else
+                                    begin
+                                      if sItemLocationDataStr = ENTRY_SLOTINDEX then
+                                      begin
+                                        //Read the subtable and get the [slotIndex] = itemCount entry
+                                        lTable := pairItemLocationData.Value.AsTable;
+                                        enumItemLocationDataSub := lTable.GetEnumerator;
+                                        while enumItemLocationDataSub.MoveNext do
+                                        begin
+                                          pairItemLocationDataSub := enumItemLocationDataSub.Current;
+                                          lItem.SlotIndex   := pairItemLocationDataSub.Key.AsInteger;    //Contains slotIndex
+                                          lItem.StackCount  := pairItemLocationDataSub.Value.AsInteger;  //Contains itemCount
+                                        end;
+                                      end;
+                                    end;
+                                end;
+                              end
                             end
+////////////////////////////////////////////////////////////////////////////////
                             else
                             begin
                               // Get the value of the current table key as string
@@ -367,6 +486,7 @@ begin
                               end;
                             end
                           end;
+////////////////////////////////////////////////////////////////////////////////
                           // Set the items server
                           lItem.Server := lServer;
                           //Add the item to the IIfAHelper FItems (search helper) now
@@ -502,6 +622,8 @@ begin
                                       myDateTime := VarToDateTime(sGuildBankLastCollected);
                                       lGuildBank.LastCollected := myDateTime;
                                     except
+                                      on EVariantTypeCastError do
+                                      //ShowMessage('DateTimeConversion not possible for: ' + sGuildBankLastCollected);
                                     end;
                                   end;
                                 end;

@@ -27,8 +27,11 @@ interface
     //Guild banks
     ESO_GUILDBANK_MAX_ITEMCOUNT = 500;
 
-    //--BagIds--
+    ESO_ITEMLINK_PREFIX         = '|H'; //An ESO itemlink starts with this, e.g. |H0 or |H1 (H0 without, H1 with surrounding [])
+
+   type
     (*
+    --BagIds--
     BAG_WORN                  = 0;
     BAG_BACKPACK              = 1;
     BAG_BANK                  = 2;
@@ -51,8 +54,6 @@ interface
     BAG_MIN_VALUE             = 0;
     BAG_MAX_VALUE             = 17;
   *)
-
-   type
     TESOBagIds = (BAG_WORN, BAG_BACKPACK, BAG_BANK, BAG_GUILDBANK, BAG_BUYBACK,
                   BAG_VIRTUAL, BAG_SUBSCRIBER_BANK,
                   BAG_HOUSE_BANK_ONE, BAG_HOUSE_BANK_TWO, BAG_HOUSE_BANK_THREE, BAG_HOUSE_BANK_FOUR, BAG_HOUSE_BANK_FIVE,

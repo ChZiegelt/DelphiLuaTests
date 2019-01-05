@@ -67,7 +67,7 @@ procedure TForm1.AfterConstruction;
 begin
   inherited;
   //Create InventoryInsightFromAshes file parser and specify the filename of the IIfA SavedVariables
-  IifaHelper := TIIFAHelper.Create;
+  IIfAHelper := TIIFAHelper.Create;
 
 end;
 
@@ -88,39 +88,47 @@ var
   lGuildBank: TIIfAGuildBank;
   lStrings: TStrings;
 begin
-  IifaHelper.ParseFile();
-
-  ////////////////////
-  //    OUTPUT      //
-  ////////////////////
-
-  // AccountName
-  //   Charaktername, CharakterId, Einstellung GildenBankLesen, Gold und andere Vermögen
-  memo.Lines.Clear;
-  for lAccount in IifaHelper.Accounts.Values do
+  //Parse the IIfA.lua SavedVariables file if given
+  if not String.IsNullOrEmpty(IIfAHelper.FileName) and FileExists(IIfAHelper.FileName) then
   begin
-    lStrings := lAccount.ToStrings();
-    memo.Lines.AddStrings( lStrings );
-    FreeAndNil(lStrings);
-  end;
+    IifaHelper.ParseFile();
 
-  //Guild Banks
-  memo.Lines.Add('');
-  for lGuildBank in IifaHelper.GuildBanks.Values do
-  begin
-    memo.Lines.Add( lGuildBank.toString() );
-  end;
+    ////////////////////
+    //    OUTPUT      //
+    ////////////////////
 
-  //Items
-  memo.Lines.Add('');
-  memo.Lines.Add('[ITEMs]');
-  lItemList := IifaHelper.Items.GetItemList();
-  if Assigned(lItemList)  then
-    for lItem in lItemList do
+    // AccountName
+    //   Charaktername, CharakterId, Einstellung GildenBankLesen, Gold und andere Vermögen
+    memo.Lines.Clear;
+
+
+    memo.Lines.Add('[Accounts & characters]');
+    for lAccount in IifaHelper.Accounts.Values do
     begin
-      memo.Lines.Add( lItem.toString() );
+      lStrings := lAccount.ToStrings();
+      memo.Lines.AddStrings( lStrings );
+      FreeAndNil(lStrings);
     end;
 
+    //Guild Banks
+    memo.Lines.Add('');
+    memo.Lines.Add('[Guild Banks]');
+    for lGuildBank in IifaHelper.GuildBanks.Values do
+    begin
+      memo.Lines.Add( lGuildBank.toString() );
+    end;
+
+    //Items
+    memo.Lines.Add('');
+    memo.Lines.Add('[Items]');
+    lItemList := IifaHelper.Items.GetItemList();
+    if Assigned(lItemList)  then
+      for lItem in lItemList do
+      begin
+        memo.Lines.Add( lItem.toString() );
+      end;
+
+  end;
 end;
 
 end.

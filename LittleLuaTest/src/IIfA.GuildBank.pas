@@ -39,15 +39,22 @@ implementation
 
 function TIIfAGuildBank.toString: String;
    var
-      sWasCollected: String;
+      sWasCollected, sDateTime: String;
+      wYear, wMonth, wDay : Word;
 begin
   if WasCollected then
    sWasCollected := 'True'
   else
    sWasCollected := 'False';
 
+  DecodeDate(LastCollected, wYear, wMonth, wDay);
+  if (wYear = 1899) and (wMonth = 12) and (wDay = 30) then
+    sDateTime := 'Never collected'
+  else
+    sDateTime := DateTimeToStr(LastCollected);
+
   Result := Format('Guildbank Server: %s, name: %s, itemCount: %s, wasCollected: %s, lastCollected: %s',
-                    [Server.Name, Name, Asset_bagSpace.used.ToString, sWasCollected, DateTimeToStr(LastCollected)]
+                    [Server.Name, Name, Asset_bagSpace.used.ToString, sWasCollected, sDateTime]
   );
 end;
 

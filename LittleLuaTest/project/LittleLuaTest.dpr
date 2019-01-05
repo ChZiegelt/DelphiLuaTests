@@ -17,7 +17,8 @@ uses
   Lua.API in '..\DelphiLua\Lua.API.pas',
   Lua in '..\DelphiLua\Lua.pas',
   ESO.Bank in '..\src\ESO.Bank.pas',
-  ESO.GuildBank in '..\src\ESO.GuildBank.pas';
+  ESO.GuildBank in '..\src\ESO.GuildBank.pas',
+  IIfA.GuildBank in '..\src\IIfA.GuildBank.pas';
 
 {$R *.res}
 

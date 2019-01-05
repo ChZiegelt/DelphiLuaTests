@@ -45,7 +45,7 @@ constructor TESOBag.Create(const ABagId: TESOBagIds; const ABagSpace: TESOBagSpa
 begin
   inherited Create;
 
-  FBagId := ABagId;
+  FBagId    := ABagId;
   FBagSpace := ABagSpace;
 end;
 

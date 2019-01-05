@@ -145,6 +145,7 @@
         <DCCReference Include="..\DelphiLua\Lua.pas"/>
         <DCCReference Include="..\src\ESO.Bank.pas"/>
         <DCCReference Include="..\src\ESO.GuildBank.pas"/>
+        <DCCReference Include="..\src\IIfA.GuildBank.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
