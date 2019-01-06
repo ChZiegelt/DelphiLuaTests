@@ -1,0 +1,16 @@
+﻿[Button2]
+Coordinates=89,10,59,58
+
+[memo]
+Coordinates=158,10,50,58
+
+[sedSearch]
+Coordinates=10,78,76,36
+
+[edSearch]
+Coordinates=10,10,69,58
+Visible=True
+
+[]
+Coordinates=147,78,91,36
+

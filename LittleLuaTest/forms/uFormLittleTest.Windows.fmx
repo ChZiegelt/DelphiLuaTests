@@ -1,4 +1,4 @@
-inherited Form1_Windows: TForm1_Windows
+inherited formMemo_Windows: TformMemo_Windows
   DesignerMasterStyle = 0
   inherited memo: TMemo
     Viewport.Width = 947.000000000000000000

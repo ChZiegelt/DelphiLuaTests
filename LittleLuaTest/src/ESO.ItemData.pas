@@ -273,9 +273,19 @@ function TESOItemData.toString: String;
     sLocation: String;
 begin
   if BagId = BAG_WORN then
-    sLocation := 'Worn: "' + Character.Name + '"'
+  begin
+    if Assigned(Character) then
+      sLocation := 'Worn: "' + Character.Name + '"'
+    else
+      sLocation := 'Character <wasn''t created yet>'
+  end
   else if BagId = BAG_BACKPACK then
-    sLocation := 'Inventory "' + Character.Name + '"'
+  begin
+    if Assigned(Character) then
+      sLocation := 'Inventory "' + Character.Name + '"'
+    else
+      sLocation := 'Character <wasn''t created yet>';
+  end
   else if BagId = BAG_BANK then
     sLocation := 'Bank'
   else if BagId = BAG_SUBSCRIBER_BANK then
@@ -283,7 +293,12 @@ begin
   else if BagId = BAG_VIRTUAL then
     sLocation := 'Craftbag'
   else if BagId = BAG_GUILDBANK then
-    sLocation := 'Guildbank "' + TIIfAGuildBank(Bank).Name + '"';
+  begin
+    if Assigned(Bank) then
+      sLocation := 'Guildbank "' + TIIfAGuildBank(Bank).Name + '"'
+    else
+      sLocation := 'Guildbank <wasn''t created yet>';
+  end;
 
   Result := Format( '> ID: %s, Name: %s, Quality:  %s, FilterType: %s, ItemLink: %s, Location: %s, SlotIndex: %s, StackCount: %s' ,
                       [ItemId.ToString, Name, Quality.ToString, FilterType.ToString, ItemLinkStr, sLocation, SlotIndex.ToString, StackCount.ToString]);

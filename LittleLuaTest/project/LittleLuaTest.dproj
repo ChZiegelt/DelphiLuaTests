@@ -128,7 +128,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="..\forms\uFormLittleTest.pas">
-            <Form>Form1</Form>
+            <Form>formMemo</Form>
             <FormType>fmx</FormType>
         </DCCReference>
         <DCCReference Include="..\src\IIFA.Helper.pas"/>
@@ -146,6 +146,17 @@
         <DCCReference Include="..\src\ESO.Bank.pas"/>
         <DCCReference Include="..\src\ESO.GuildBank.pas"/>
         <DCCReference Include="..\src\IIfA.GuildBank.pas"/>
+        <DCCReference Include="..\src\ESO.HouseBank.pas"/>
+        <DCCReference Include="..\src\ESO.SubscriberBank.pas"/>
+        <DCCReference Include="..\forms\uFormLittleGridTest.pas">
+            <Form>formGrid</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
+        <DCCReference Include="..\forms\uDataModule.pas">
+            <Form>DataModule1</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

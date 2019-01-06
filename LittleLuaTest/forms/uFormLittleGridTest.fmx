@@ -1,0 +1,55 @@
+object formGrid: TformGrid
+  Left = 150
+  Top = 90
+  Caption = 'Grid'
+  ClientHeight = 590
+  ClientWidth = 1024
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Left = 150
+  Top = 90
+  DesignerMasterStyle = 0
+  object sgrid: TStringGrid
+    Align = Client
+    CanFocus = True
+    ClipChildren = True
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 10.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Margins.Bottom = 10.000000000000000000
+    Size.Width = 1004.000000000000000000
+    Size.Height = 570.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    RowCount = 1
+    Options = [AlternatingRowBackground, ColumnResize, ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
+    Viewport.Width = 1000.000000000000000000
+    Viewport.Height = 529.000000000000000000
+    object StringColumn1: TStringColumn
+    end
+    object StringColumn2: TStringColumn
+    end
+    object StringColumn3: TStringColumn
+    end
+    object StringColumn4: TStringColumn
+    end
+    object StringColumn5: TStringColumn
+    end
+    object IntegerColumn1: TIntegerColumn
+    end
+    object IntegerColumn2: TIntegerColumn
+    end
+    object IntegerColumn3: TIntegerColumn
+    end
+    object IntegerColumn4: TIntegerColumn
+    end
+    object IntegerColumn5: TIntegerColumn
+    end
+    object DateColumn1: TDateColumn
+    end
+    object TimeColumn1: TTimeColumn
+    end
+  end
+end

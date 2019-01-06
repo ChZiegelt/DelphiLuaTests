@@ -54,6 +54,7 @@ type
     FItems:       TESOItemDataHandler;//TList<TESOItemData>;
   private
     procedure ParseSettingsTable(const aSettingsTable: ILuaTable);
+    procedure ParseGuildBanksTable(const aGuildBanksTable: ILuaTable);
     procedure ParseDataTable(const aDataTable: ILuaTable);
 
   public
@@ -150,12 +151,14 @@ function TIIFAHelper.ParseFile(const AFileName: String = ''): Boolean;
 var
   lFile: String;
 
-  lDataTable, lSettingsTable: ILuaTable;
-  
+  lSettingsTable, lDataTable, lGuildBanksTable: ILuaTable;
+  lluaScript: TLuaScript;
+
   lAccountExtractorPair: TPair<string, TIIfAAccount>;
   lCharacterExtracted: TESOCharacter;
-  lLuaCodeHelperList: TStringList;
 
+  lLuaCodeHelperList: TStringList;
+  lStrings: TStrings;
 begin
   Result := False;
 
@@ -205,9 +208,22 @@ begin
       end;
     end;
 
+  //Using a lua script to read the global lua variable 'IIfAHelper_guildBanks'. which contains the guild banks for each server and account now.
+  //Return the guild banks as table, using the <Server> as key, a subtable with the @Accountname as key, and a subtable
+  //containing the up to 5 guildbank names of the @Account on this server.
+  //>The order of the guild banks is random! The first entry IS NOT ALWAYS the guild1 on that server!!!
+  lStrings := TStringList.Create();
+  lStrings.LoadFromFile('IIfAHelper_guildBanks.lua');
+  lluaScript := TLuaScript.Create(lStrings.Text);
+  FLua.LoadFromScript(lluaScript);
+  FreeAndNil(lStrings);
+  lGuildBanksTable := FLua.GetGlobalVariable('IIfAHelper_guildBanks').AsTable;
+  // This method will fill fGuildBanks
+  ParseGuildBanksTable( lGuildBanksTable );
+
   //Get the global variable contents from lua routines: IIfA_Data (SavedVariables object containing the item information at each bag + character, server and account on server)
   lDataTable := FLua.GetGlobalVariable('IIfA_Data').AsTable;
-  // This method will fill fServer[], fItems[] etc.
+  // This method will fill fServer[], fItems[] etc. and connect the banks, characters and accounts to them
   ParseDataTable( lDataTable );
 
   FSavedVariablesFileName := lFile;
@@ -256,7 +272,102 @@ begin
   end;
 end;
 
-//Called from TIIFAHelper.ParseFile after parsing the settings table,
+//Called from TIIFAHelper.ParseFile after parsing the settings table.
+//The lua table stores the guild bank names in this format:
+//IIfAHelper_guildBanks = {
+//  ['EU'] = {
+//    ["@AccountName"] = {
+//      [1] = "Guild name";
+//      [2] = "Guild name";
+//      [3] = "Guild name";
+//      [4] = "Guild name";
+//      [5] = "Guild name";
+//    },
+//  },
+//  ['NA'] = {
+//    ["@AccountName"] = {
+//      [1] = "Guild name";
+//      [2] = "Guild name";
+//      [3] = "Guild name";
+//      [4] = "Guild name";
+//      [5] = "Guild name";
+//    },
+//  },
+//  ['PTS'] = {
+//    ["@AccountName"] = {
+//      [1] = "Guild name";
+//      [2] = "Guild name";
+//      [3] = "Guild name";
+//      [4] = "Guild name";
+//      [5] = "Guild name";
+//    },
+//  },
+//}
+//Parsing it needs us to enumerate over the table and check the "key" if it is in variable "IIfA.Servers",
+//then get the "value" of the found key AsTable, and then enumerate over this subtable and get the "key"
+//of the subtable AsString = @Account. Check if this account is in "IIfA.Accounts". Then get the "value"
+//of this as table and enumerate of it to get each of the up to 5 guild names, "value" AsString.
+procedure TIIFAHelper.ParseGuildBanksTable(const aGuildBanksTable: ILuaTable);
+var
+  enum, enumServer, enumServerAccount, enumServerGuildBank: ILuaTableEnumerator;
+  pair, pairServer, pairServerAccount, pairServerGuildBank: TLuaKeyValuePair;
+  lTable: ILuaTable;
+  lServerGuildBank: TESOServer;
+  lAccount: TIIfAAccount;
+  lGuildBank: TIIfAGuildBank;
+begin
+  // Wenn nicht nil, versuche den Inhalt zu verstehen
+  if not Assigned(aGuildBanksTable) then
+     exit;
+
+  // Parse tables below IIfAHelper_guildBanks
+  enum := aGuildBanksTable.GetEnumerator;
+
+  //Get next server entry of IIfAHelper_guildBanks
+  while enum.MoveNext do
+  begin
+    pair := enum.Current;
+////////////////////////////////////////////////////////////////////////////////
+    //Entry is a known server?
+    if Servers.ContainsKey(pair.Key.AsString) then
+    begin
+      lServerGuildBank := Servers[pair.Key.AsString];
+      lTable := pair.Value.AsTable;
+      enumServer := lTable.GetEnumerator;
+      // Iterate over the possible servers
+      while enumServer.MoveNext do
+      begin
+        pairServer := enumServer.Current;
+////////////////////////////////////////////////////////////////////////////////
+        //Entry is a known account?
+        if Accounts.ContainsKey(pairServer.Key.AsString.Replace('@', '')) then
+        begin
+          lTable := pairServer.Value.AsTable;
+          enumServerAccount := lTable.GetEnumerator;
+          while enumServerAccount.MoveNext do
+          begin
+            pairServerAccount := enumServerAccount.Current;
+////////////////////////////////////////////////////////////////////////////////
+            if Assigned(GuildBanks) then
+            begin
+              if not GuildBanks.ContainsKey(pairServerAccount.Value.AsString) then
+              begin
+                lGuildBank := TIIfAGuildBank.Create(pairServerAccount.Value.AsString);
+                if (Assigned(lGuildBank)) and (Assigned(lServerGuildBank)) then
+                begin
+                  lGuildBank.Server := lServerGuildBank;
+                  GuildBanks.Add(lGuildBank.Name, lGuildBank);
+                end;
+              end;
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+//Called from TIIFAHelper.ParseFile after parsing the guild banks table,
 // the data table will be parsed now to get the items
 procedure TIIFAHelper.ParseDataTable( const aDataTable: ILuaTable );
 var
@@ -275,20 +386,11 @@ var
   iBagSpaceChecked: byte;
   iServerNameForGuildBankLength, iBagId: integer;
   myDateTime: TDateTime;
-  //myFs: TFormatSettings;
   arDateTime: TArray<String>;
 begin
   // Wenn nicht nil, versuche den Inhalt zu verstehen
   if not Assigned(aDataTable) then
      exit;
-  //Format the DateTime
-(*
-  with myFs do begin
-    myFs.DateSeparator := '.';
-    myFs.ShortDateFormat := 'dd.mm.yyyy';
-    myFs.LongDateFormat  := 'dd.mm.yyyy hh:mm:ss';
-  end;
-*)
 
   // Parse tables below IIfA_Data
   enum := aDataTable.GetEnumerator;
@@ -431,7 +533,7 @@ begin
                                         begin
                                           //Create the housebank here and assign it to IIfA.HouseBanks
                                           lHouseBank := TESOHouseBank.Create('', TESOBagIds(iBagId));
-                                          if Assigned (lBank) then
+                                          if Assigned (lHouseBank) then
                                             HouseBanks.Add(TESOBagIds(iBagId), lHouseBank);
                                         end;
                                       end
@@ -570,14 +672,15 @@ begin
                           pairGuildBanks := enumGuildBanks.Current;
                           //The guildbanks name
                           sGuildBankStr := pairGuildBanks.Key.AsString;
-                          //Create new guild bank
-                          lGuildBank := TIIfAGuildBank.Create(sGuildBankStr);
+                          //Get the guild bank
+                          lGuildBank := GuildBanks[sGuildBankStr];
                           //Get the server of the guild bank
                           lServerGuildBank := Servers[sServerNameForGuildBank];
                           //Assign the guild bank to the correct server
                           if Assigned(lGuildBank) and Assigned(lServerGuildBank) then
                           begin
-                            lGuildBank.Server := lServerGuildBank;
+                            if not Assigned(lGuildBank.Server) then
+                              lGuildBank.Server := lServerGuildBank;
                             //Get the guild banks data
                             lTable := pairGuildBanks.Value.AsTable;
                             enumGuildBanksData := lTable.GetEnumerator;
@@ -629,8 +732,9 @@ begin
                                 end;
                               end;
                             end;
+                            //Guild banks were added already in procedure ParseGuildBanksTable!
                             //Add the found guild bank to the IIfAHelper.GuildBanks
-                            GuildBanks.Add(lGuildBank.Name, lGuildBank)
+                            //GuildBanks.Add(lGuildBank.Name, lGuildBank)
                           end;
                         end;
                       end;

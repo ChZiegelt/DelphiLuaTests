@@ -1,7 +1,7 @@
-object Form1: TForm1
+object formMemo: TformMemo
   Left = 450
   Top = 210
-  Caption = 'Form1'
+  Caption = 'Memo'
   ClientHeight = 480
   ClientWidth = 957
   Position = Designed
@@ -14,6 +14,8 @@ object Form1: TForm1
   object memo: TMemo
     Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
     DataDetectorTypes = []
+    HideSelectionOnExit = False
+    ReadOnly = True
     Align = Client
     Margins.Left = 5.000000000000000000
     Margins.Top = 40.000000000000000000
@@ -23,8 +25,8 @@ object Form1: TForm1
     Size.Height = 435.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1
-    Viewport.Width = 943.000000000000000000
-    Viewport.Height = 431.000000000000000000
+    Viewport.Width = 947.000000000000000000
+    Viewport.Height = 435.000000000000000000
   end
   object Button2: TButton
     Position.X = 8.000000000000000000
@@ -35,5 +37,28 @@ object Form1: TForm1
     TabOrder = 0
     Text = 'Parse IIfA.lua'
     OnClick = Button2Click
+  end
+  object edSearch: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Anchors = [akTop, akRight]
+    TabOrder = 2
+    Position.X = 584.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 369.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnKeyUp = edSearchKeyUp
+    object sedSearch: TSearchEditButton
+      CanFocus = False
+      Cursor = crHandPoint
+      Hint = 'Search'
+      Size.Width = 28.000000000000000000
+      Size.Height = 18.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      ParentShowHint = False
+      ShowHint = True
+      OnClick = sedSearchClick
+    end
   end
 end
