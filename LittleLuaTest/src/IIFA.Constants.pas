@@ -16,6 +16,12 @@ interface
 
   //General constants of the addon Inventory Insight from Ashes (IIfA)
   const
+    //-----------------------------------------------------------------------------------
+    //- Constants used for the IIfA SavedVariables file parsing in IIfAHelper class -----
+    //-----------------------------------------------------------------------------------
+    IIFA_HELPER_LUA_SCRIPT_GET_GUILDBANKS = 'IIfAHelper_guildBanks';
+
+////////////////////////////////////////////////////////////////////////////////
 
     //-----------------------------------------------------
     //----- Constants used for the IIfA SavedVariables file -----

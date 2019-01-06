@@ -17,6 +17,11 @@ interface
   //General constants of the Game Elder Scrolls Online
   const
     //-----------------------------------------------------
+    //----- Constants used in the lua script environment --
+    //-----------------------------------------------------
+    LUA_SCRIPT_FILE_EXTENSION = '.lua';
+
+    //-----------------------------------------------------
     //----- Constants used in the game environment -----
     //-----------------------------------------------------
     SERVER_EU_IP              = '195.122.154.1';

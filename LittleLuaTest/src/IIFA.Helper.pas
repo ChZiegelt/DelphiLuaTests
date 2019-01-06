@@ -34,6 +34,9 @@ uses
   ;
  {$ENDREGION}
 
+  //Ressource file to include the lua scripts
+ {$R ../ressources/rIIfAHelper.RES}
+
 type
   TIIFAHelper = class
   strict private
@@ -94,6 +97,29 @@ begin
   Result:=true;
 end;
 
+function extractRessourceFile(const aRessourceName: String; aRessourceFileName: String): Boolean;
+var
+  rStream: TResourceStream;
+  fStream: TFileStream;
+begin
+  result := False;
+  rStream := TResourceStream.Create(hInstance, aRessourceName, RT_RCDATA);
+  try
+    try
+      fStream := TFileStream.Create(aRessourceFileName, fmCreate) ;
+    except
+      ShowMessage('Aborting: Needed ressource file ''' + aRessourceName + ''' is missing!');
+    end;
+    try
+      fStream.CopyFrom(rStream, 0) ;
+    finally
+      fStream.Free;
+      result := True;
+    end;
+  finally
+    rStream.Free;
+  end;
+end;
 
 
 { TIIFAHelper }
@@ -145,8 +171,6 @@ begin
   inherited;
 end;
 
-
-
 function TIIFAHelper.ParseFile(const AFileName: String = ''): Boolean;
 var
   lFile: String;
@@ -159,6 +183,8 @@ var
 
   lLuaCodeHelperList: TStringList;
   lStrings: TStrings;
+
+  fLuaScriptFileName: string;
 begin
   Result := False;
 
@@ -168,7 +194,10 @@ begin
      lFile := AFileName;
 
   if not FileExists(lFile) then
-     exit(False);
+  begin
+    ShowMessage('Aborting: lua SavedVariables file ''' + lFile + ''' was not found!');
+    exit(False);
+  end;
 
   //Clear the old entries in Accounts, characters, banks, items here now
   if Assigned(FAccounts) then
@@ -184,7 +213,7 @@ begin
   if Assigned(FItems) then
     FItems.Clear;
 
-  //Load the contents of the IIfA.lua SavedVariables file
+  //Load the contents of the IIfA.lua SavedVariables file to create the global variables IIfA_Settings and IIfA_Data
   //LoadFromFile is not able to use UTF8 conversion properly!
   //FLua.LoadFromFile( lFile, True );
   //Workaround over TStringList to support UTF8 files w/o BOM
@@ -208,19 +237,33 @@ begin
       end;
     end;
 
-  //Using a lua script to read the global lua variable 'IIfAHelper_guildBanks'. which contains the guild banks for each server and account now.
+  //Before parsing table IIfA_Data the guild banks need to be created properly. As they are in between IIfA_Data, and the
+  //order of parsing cannot be set before the parse, we need to extract them separately before parsing IIfA_Data for the items.
+  //Using a lua script to read the global lua variable 'IIfAHelper_guildBanks' which contains the guild banks for each server and account now.
+  //Therefor a lua script is run which creates a global table "IIfAHelper_guildBanks".
   //Return the guild banks as table, using the <Server> as key, a subtable with the @Accountname as key, and a subtable
   //containing the up to 5 guildbank names of the @Account on this server.
   //>The order of the guild banks is random! The first entry IS NOT ALWAYS the guild1 on that server!!!
+  //New method: Load the lua script from compiled ressource file ressources/IIfAHelper.RES, extract it as IIfAHelper_guildBanks.lua file
+  //and then load it
+  //This part extracts the .lua file from compiled project .exe
+  fLuaScriptFileName := IIFA_HELPER_LUA_SCRIPT_GET_GUILDBANKS + LUA_SCRIPT_FILE_EXTENSION;
+  if not extractRessourceFile(IIFA_HELPER_LUA_SCRIPT_GET_GUILDBANKS, fLuaScriptFileName) then 
+    exit(False);
+  if not FileExists(fLuaScriptFileName) then
+    exit(False);
   lStrings := TStringList.Create();
-  lStrings.LoadFromFile('IIfAHelper_guildBanks.lua');
+  lStrings.LoadFromFile(fLuaScriptFileName);
+
   lluaScript := TLuaScript.Create(lStrings.Text);
   FLua.LoadFromScript(lluaScript);
   FreeAndNil(lStrings);
-  lGuildBanksTable := FLua.GetGlobalVariable('IIfAHelper_guildBanks').AsTable;
+  lGuildBanksTable := FLua.GetGlobalVariable(IIFA_HELPER_LUA_SCRIPT_GET_GUILDBANKS).AsTable;
   // This method will fill fGuildBanks
   ParseGuildBanksTable( lGuildBanksTable );
-
+  //Remove the lua script file from the project output directory again
+  if FileExists(fLuaScriptFileName) then DeleteFile(fLuaScriptFileName); 
+  
   //Get the global variable contents from lua routines: IIfA_Data (SavedVariables object containing the item information at each bag + character, server and account on server)
   lDataTable := FLua.GetGlobalVariable('IIfA_Data').AsTable;
   // This method will fill fServer[], fItems[] etc. and connect the banks, characters and accounts to them
