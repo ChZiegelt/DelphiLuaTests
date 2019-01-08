@@ -12,6 +12,12 @@ uses
   , System.Generics.Collections
   , Lua
 
+  ,IdHTTP
+  ,FMX.Graphics
+  //,Vcl.Imaging.PngImage
+  //,Vcl.Imaging.jpeg
+
+
   // ESO
   , ESO.Constants
   , ESO.Account
@@ -27,6 +33,9 @@ uses
   ;
 
 type
+  //ESO itemimage type. Specifies where the item image should be get from (online URL at www.uesp.net e.g.)
+  TESOItemImageType = (ESOiit_UESP);
+
   //ESO itemLink will be of this format:
   //|H%d:item:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s|hItemNameAsString|h
   //Example: |H1:item:45810:1:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|hJode|h
@@ -173,6 +182,8 @@ type
     property Bank: TESOBank read RBank write RBank;
 
 
+    function GetItemImageByItemId(const itemId: Integer = -1; const itemImageType: TESOItemImageType = ESOiit_UESP): TBitMap;
+
     function toString(): String; override;
 
     constructor Create( const AItemLink: String = '' );
@@ -248,6 +259,72 @@ begin
      Result := FItemLink.ItemId
   else
      Result := -1;
+end;
+
+function TESOItemData.GetItemImageByItemId(const itemId: Integer;  const itemImageType: TESOItemImageType): TBitMap;
+var
+  lURL:   String;
+  lIdHTTP: TIdHTTP;
+  lResponse : TMemoryStream;
+  //lPNG:   TPNGImage;
+  //lJPEG:  TJPEGImage;
+  FPicture: TBitMap;
+begin
+  if itemId = -1 then
+  begin
+    result := nil;
+    exit;
+  end;
+
+  //Load the image ressource from the UESP website
+  if itemImageType = ESOiit_UESP  then
+  begin
+    lUrl := Format(UESP_IMAGE_URL_BY_ITEMID, [itemId.ToString]);
+    if lUrl <> '' then
+    begin
+      lResponse := TMemoryStream.Create;
+      try
+        FPicture := TBitMap.Create;
+        lIdHTTP := TIdHTTP.Create();
+        lIdHTTP.get(lUrl, lResponse);
+        lResponse.Seek(0, soFromBeginning);
+
+        //PNG
+        if lUrl.EndsWith('.png') then
+        begin
+          //lPNG := TPNGImage.Create;
+          try
+            //lPNG.LoadFromStream( lResponse );
+            //FPicture.Assign( lPNG );
+            FPicture.LoadFromStream(lResponse);
+            result := FPicture;
+          finally
+            //lPNG.Free;
+          end;
+        end
+        //JPG, JPEG
+        else if lURL.EndsWith('.jpg') or lURL.EndsWith( '.jpeg' ) then
+        begin
+          //lJPEG := TJPEGImage.Create;
+          try
+            //lJPEG.LoadFromStream(lResponse);
+            //FPicture.Assign(lJPEG);
+            FPicture.LoadFromStream(lResponse);
+            result := FPicture;
+          finally
+            //lJPEG.Free;
+          end;
+        end;
+
+      finally
+        FreeAndNil(lResponse);
+      end;
+    end
+
+  else
+    result := nil;
+    exit;
+  end;
 end;
 
 function TESOItemData.getItemLinkString: String;

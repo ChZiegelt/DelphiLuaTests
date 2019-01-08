@@ -25,8 +25,9 @@ object formGrid: TformGrid
     TabOrder = 0
     RowCount = 1
     Options = [AlternatingRowBackground, ColumnResize, ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
-    Viewport.Width = 1000.000000000000000000
-    Viewport.Height = 529.000000000000000000
+    OnCellClick = sgridCellClick
+    Viewport.Width = 1004.000000000000000000
+    Viewport.Height = 570.000000000000000000
     object StringColumn1: TStringColumn
     end
     object StringColumn2: TStringColumn

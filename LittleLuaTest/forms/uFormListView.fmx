@@ -1,0 +1,137 @@
+object formListView: TformListView
+  Left = 0
+  Top = 0
+  Caption = 'TreeView'
+  ClientHeight = 590
+  ClientWidth = 800
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object listItems: TListBox
+    Align = Client
+    Cursor = crHandPoint
+    Margins.Top = 70.000000000000000000
+    Size.Width = 800.000000000000000000
+    Size.Height = 520.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    DisableFocusEffect = True
+    DefaultItemStyles.ItemStyle = ''
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    Viewport.Width = 796.000000000000000000
+    Viewport.Height = 516.000000000000000000
+  end
+  object cbServer: TComboBox
+    Cursor = crHandPoint
+    Position.X = 64.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 150.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+  end
+  object LabServer: TLabel
+    Position.X = 3.000000000000000000
+    Position.Y = 10.000000000000000000
+    Size.Width = 57.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Server:'
+    TabOrder = 11
+  end
+  object edSearch: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Anchors = [akTop, akRight]
+    TabOrder = 9
+    Position.X = 440.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 359.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    object sedSearch: TSearchEditButton
+      CanFocus = False
+      Cursor = crHandPoint
+      Hint = 'Search'
+      Size.Width = 28.000000000000000000
+      Size.Height = 18.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      ParentShowHint = False
+      ShowHint = True
+    end
+  end
+  object labCharname: TLabel
+    Position.X = 3.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 57.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Character:'
+    TabOrder = 10
+  end
+  object cbCharacter: TComboBox
+    Cursor = crHandPoint
+    Position.X = 64.000000000000000000
+    Position.Y = 38.000000000000000000
+    Size.Width = 150.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+  end
+  object cbAccount: TComboBox
+    Cursor = crHandPoint
+    Position.X = 280.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 150.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+  end
+  object labAccount: TLabel
+    Position.X = 219.000000000000000000
+    Position.Y = 10.000000000000000000
+    Size.Width = 57.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Account:'
+    TabOrder = 8
+  end
+  object cbQuality: TComboBox
+    Cursor = crHandPoint
+    Position.X = 280.000000000000000000
+    Position.Y = 38.000000000000000000
+    Size.Width = 150.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+  end
+  object labQuality: TLabel
+    Position.X = 219.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 57.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Quality:'
+    TabOrder = 6
+  end
+  object cbLevel: TComboBox
+    Cursor = crHandPoint
+    Position.X = 501.000000000000000000
+    Position.Y = 38.000000000000000000
+    Size.Width = 150.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+  end
+  object labLevel: TLabel
+    Position.X = 440.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 57.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Level:'
+    TabOrder = 4
+  end
+end

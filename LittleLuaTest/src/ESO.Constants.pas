@@ -34,6 +34,19 @@ interface
 
     ESO_ITEMLINK_PREFIX         = '|H'; //An ESO itemlink starts with this, e.g. |H0 or |H1 (H0 without, H1 with surrounding [])
 
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////////
+  //Online ressources like images of items, data of items, search of items, etc.
+  //////////////////////////////////////////////////////////////////////////////
+
+  //UESP
+  UESP_IMAGE_URL_BY_ITEMID  = 'http://esoitem.uesp.net/itemLinkImage.php?itemid=%s&summary&none=item.png';
+
+
+
    type
     (*
     --BagIds--
@@ -64,6 +77,7 @@ interface
                   BAG_HOUSE_BANK_ONE, BAG_HOUSE_BANK_TWO, BAG_HOUSE_BANK_THREE, BAG_HOUSE_BANK_FOUR, BAG_HOUSE_BANK_FIVE,
                   BAG_HOUSE_BANK_SIX, BAG_HOUSE_BANK_SEVEN, BAG_HOUSE_BANK_EIGHT, BAG_HOUSE_BANK_NINE, BAG_HOUSE_BANK_TEN,
                   BAG_DELETE);
+
 
 implementation
 end.

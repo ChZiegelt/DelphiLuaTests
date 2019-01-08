@@ -11,15 +11,20 @@ uses
   , System.Classes
 
   , System.Generics.Collections
+  , Generics.Defaults
   , Lua
 
   // ESO
   , ESO.Constants
+  , ESO.Bank
   , ESO.GuildBank
+  , ESO.HouseBank
   , ESO.ItemData
+  , ESO.Server
 
   // IIFA
   , IIFA.Account
+  , IIFA.Character
   , IIFA.GuildBank
   , IIFA.Helper
 
@@ -34,9 +39,12 @@ uses
   , FMX.Memo
   , FMX.Controls.Presentation
   , FMX.StdCtrls, FMX.Edit
+  , FMX.TreeView
 
-  //Grid Formular
+  //Formulare
   , uFormLittleGridTest
+  , uFormListView
+  , uFormImage
   ;
   {$ENDREGION}
 
@@ -52,12 +60,12 @@ type
     procedure edSearchKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
       Shift: TShiftState);  private
 
-    IifaHelper: TIIFAHelper;
 
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
 
   public
+    IifaHelper: TIIFAHelper;
 
   end;
 
@@ -115,6 +123,8 @@ begin
   //Create InventoryInsightFromAshes file parser and specify the filename of the IIfA SavedVariables
   IIfAHelper := TIIFAHelper.Create;
   FormGrid := TFormGrid.Create(formMemo);
+  formListView := TformListView.Create(formMemo);
+  formEsoImage := TformESOImage.Create(formMemo);
 end;
 
 
@@ -127,13 +137,18 @@ end;
 
 procedure TformMemo.Button2Click(Sender: TObject);
 var
-  lAccount: TIIfAAccount;
-  lItem:    TESOItemData;
-  lItemList:  TList<TESOItemData>;
-  lGuildBank: TIIfAGuildBank;
-  lStrings: TStrings;
-  sLocation: String;
-  iRow: Integer;
+  lAccount:     TIIfAAccount;
+  lCharacter:   TIIfACharacter;
+  lBank:        TESOBank;
+  lGuildBank:   TIIfAGuildBank;
+  lHouseBank:   TESOHouseBank;
+  lServer:      TESOServer;
+  lItem:        TESOItemData;
+  lItemList:    TList<TESOItemData>;
+  lStrings:     TStrings;
+  sLocation:    String;
+  iRow:         Integer;
+
 begin
   //Parse the IIfA.lua SavedVariables file if given
   if not String.IsNullOrEmpty(IIfAHelper.FileName) and FileExists(IIfAHelper.FileName) then
@@ -147,8 +162,8 @@ begin
     // AccountName
     //   Charaktername, CharakterId, Einstellung GildenBankLesen, Gold und andere Vermögen
     memo.Lines.Clear;
-
-
+    lItemList := IifaHelper.Items.GetItemList();
+(*
     memo.Lines.Add('[Accounts & characters]');
     for lAccount in IifaHelper.Accounts.Values do
     begin
@@ -199,12 +214,13 @@ begin
             formGrid.sgrid.Cells[1, iRow] := '';
           if (Assigned(lItem.Bank)) and (TESOGuildBank(lItem.Bank).Name <> '') then
             formGrid.sgrid.Cells[2, iRow] := TESOGuildBank(lItem.Bank).Name;
-          formGrid.sgrid.Cells[3, iRow] := '';
+          formGrid.sgrid.Cells[3, iRow] := lItem.ItemId.ToString;
           formGrid.sgrid.Cells[4, iRow] := '';
           //5xInteger
           formGrid.sgrid.Cells[5, iRow] := lItem.FilterType.ToString;
           formGrid.sgrid.Cells[6, iRow] := lItem.Level.ToString;
           formGrid.sgrid.Cells[7, iRow] := lItem.Quality.ToString;
+
 
           if lItem.BagId = BAG_WORN then
             sLocation := 'Worn'
@@ -230,6 +246,48 @@ begin
         end;
       formGrid.Visible := True;
       formGrid.Show;
+    end;
+*)
+    ///////////////////////////////////
+    //  OUTPUT ListView + Combobox   //
+    ///////////////////////////////////
+    if (Assigned(formListView)) and (Assigned(lItemList)) then
+    begin
+      //Add locations to locationsCombobox
+      formListView.cbAccount.Clear;
+      formListView.cbCharacter.Clear;
+      formListView.cbServer.Clear;
+      formListView.cbQuality.Clear;
+      formListView.cbLevel.Clear;
+
+      formListView.cbAccount.Items.Add('-All accounts-');
+      formListView.cbCharacter.Items.Add('-All characters-');
+      formListView.cbServer.Items.Add('-All Servers-');
+      formListView.cbQuality.Items.Add('-All qualities-');
+      formListView.cbLevel.Items.Add('-All levels-');
+
+      for lAccount in IIfAHelper.Accounts.Values do
+      begin
+        formListView.cbAccount.Items.Add(lAccount.DisplayName);
+      end;
+      for lCharacter in IIfAHelper.Characters.Values do
+      begin
+        formListView.cbCharacter.Items.Add(lCharacter.Name);
+      end;
+      for lServer in IIfAHelper.Servers.Values do
+      begin
+        formListView.cbServer.Items.Add(lServer.Name);
+      end;
+
+      //Add items to listBox
+      for lItem in lItemList do
+      begin
+        formListView.listItems.Items.Add(lItem.Name);
+      end;
+      formListView.listItems.Sorted := True;
+
+      formListView.Visible := True;
+      formListView.Show;
     end;
   end;
 end;

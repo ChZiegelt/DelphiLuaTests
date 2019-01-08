@@ -14,7 +14,6 @@ uses
 
   // ESO
   , ESO.Character
-
   ;
  {$ENDREGION}
 
@@ -24,8 +23,11 @@ type
   TESOAccount = class abstract ( TList< TESOCharacter >  )
   strict private
     FDisplayName: TESOAccountName;
+    //RServer: TESOServer;
+
   public
     property DisplayName: TESOAccountName read FDisplayName write FDisplayName;
+    //property Server: TESOServer read RServer write RServer;
 
     //Override this function to parse the lua table with account data for the character data
     procedure ParseCharacters(const AAccount: ILuaTable); virtual; abstract;

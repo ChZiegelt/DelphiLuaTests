@@ -1,0 +1,27 @@
+object formESOImage: TformESOImage
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = SizeToolWin
+  Caption = 'ESOItemImage'
+  ClientHeight = 400
+  ClientWidth = 450
+  Cursor = crHelp
+  Quality = HighQuality
+  StyleLookup = 'calloutpanelstyle'
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  ShowHint = False
+  DesignerMasterStyle = 0
+  object imgItemImage: TImageControl
+    Align = Client
+    DisableFocusEffect = True
+    EnableDragHighlight = False
+    EnableOpenDialog = False
+    Size.Width = 450.000000000000000000
+    Size.Height = 400.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+  end
+end

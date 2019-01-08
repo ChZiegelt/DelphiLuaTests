@@ -22,7 +22,9 @@ uses
   ESO.HouseBank in '..\src\ESO.HouseBank.pas',
   ESO.SubscriberBank in '..\src\ESO.SubscriberBank.pas',
   uFormLittleGridTest in '..\forms\uFormLittleGridTest.pas' {formGrid},
-  uDataModule in '..\forms\uDataModule.pas' {DataModule1: TDataModule};
+  uDataModule in '..\forms\uDataModule.pas' {DataModule1: TDataModule},
+  uFormImage in '..\forms\uFormImage.pas' {formESOImage},
+  uFormListView in '..\forms\uFormListView.pas' {formListView};
 
 {$R *.res}
 
@@ -31,5 +33,7 @@ begin
   Application.CreateForm(TformMemo, formMemo);
   Application.CreateForm(TformGrid, formGrid);
   Application.CreateForm(TDataModule1, DataModule1);
+  Application.CreateForm(TformESOImage, formESOImage);
+  Application.CreateForm(TformListView, formListView);
   Application.Run;
 end.
